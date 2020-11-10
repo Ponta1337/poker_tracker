@@ -9,9 +9,6 @@ app.use(express.json());
 
 const db = config.get("mongoURI");
 
-// const mongoURI =
-//   "mongodb+srv://Ponta1337:Hejhej123@cluster0.hmxny.mongodb.net/Items?retryWrites=true&w=majority";
-
 mongoose
   .connect(db, {
     useNewUrlParser: true,
