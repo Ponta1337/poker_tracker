@@ -11,6 +11,9 @@ const ItemSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  userId: {
+    type: String,
+  },
 });
 
 module.exports = Item = mongoose.model("item", ItemSchema);

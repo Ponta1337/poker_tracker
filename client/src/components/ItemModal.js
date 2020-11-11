@@ -18,11 +18,21 @@ class ItemModal extends Component {
   state = {
     modal: false,
     name: "",
+    userId: "",
   };
 
   static propTypes = {
     isAuthenticated: PropTypes.bool,
+    auth: PropTypes.object.isRequired,
   };
+
+  // componentDidUpdate() {
+  // //  const { _id } = this.props.auth.user;
+
+  //   this.setState({
+  //     userId: _id,
+  //   });
+  // }
 
   toggle = () => {
     this.setState({
@@ -31,7 +41,10 @@ class ItemModal extends Component {
   };
 
   onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({
+      [e.target.name]: e.target.value,
+      userId: this.props.auth.user.id,
+    });
   };
 
   onSubmit = (e) => {
@@ -39,6 +52,7 @@ class ItemModal extends Component {
 
     const newItem = {
       name: this.state.name,
+      userId: this.state.userId,
     };
 
     //Add item via addItem action
@@ -91,6 +105,7 @@ class ItemModal extends Component {
 const mapStateToProps = (state) => ({
   item: state.item,
   isAuthenticated: state.auth.isAuthenticated,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { addItem })(ItemModal);
