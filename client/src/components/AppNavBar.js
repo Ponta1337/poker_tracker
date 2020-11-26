@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 import LoginModal from "./auth/LoginModal";
 import RegisterModal from "./auth/RegisterModal";
 import Logout from "./auth/Logout";
-//import auth from "../../../middleware/auth";
+import { Link } from "react-router-dom";
 
 class AppNavBar extends Component {
   state = {
@@ -41,6 +41,11 @@ class AppNavBar extends Component {
           </span>
         </NavItem>
         <NavItem>
+          <Link to="/MyTournaments" className={"nav-link"}>
+            My Tournaments
+          </Link>
+        </NavItem>
+        <NavItem>
           <Logout />
         </NavItem>
       </Fragment>
@@ -60,6 +65,7 @@ class AppNavBar extends Component {
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
             <NavbarBrand href="/">Poker Tracker</NavbarBrand>
+
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>

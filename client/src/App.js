@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import AppNavBar from "./components/AppNavBar";
-import ShoppingList from "./components/ShoppingList";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import MyTournaments from "./components/MyTournaments/MyTournaments";
+import Home from "./components/Home/Home";
+
 import { Container } from "reactstrap";
 
 import { Provider } from "react-redux";
@@ -9,7 +12,6 @@ import { loadUser } from "./actions/authActions";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import ItemModal from "./components/ItemModal";
 
 const App = () => {
   useEffect(() => {
@@ -18,13 +20,20 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <div className="App">
-        <AppNavBar />
-        <Container>
-          <ItemModal />
-          <ShoppingList />
-        </Container>
-      </div>
+      <Router>
+        <div className="App">
+          <AppNavBar />
+
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/mytournaments" exact component={MyTournaments} />
+          </Switch>
+          <Container>
+            {/* <TournamentModal />
+            <TournamentList /> */}
+          </Container>
+        </div>
+      </Router>
     </Provider>
   );
 };

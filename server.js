@@ -20,7 +20,7 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-app.use("/api/items", require("./routes/api/items"));
+app.use("/api/tournaments", require("./routes/api/tournaments"));
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
 
