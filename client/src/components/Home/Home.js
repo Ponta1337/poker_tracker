@@ -3,11 +3,9 @@ import React, { useEffect } from "react";
 import TournamentModal from "../TournamentModal";
 
 import SharedStats from "../SharedStats";
-import { Container } from "reactstrap";
-import { Provider } from "react-redux";
-import store from "../../store";
 //import { loadUser } from "../../actions/authActions";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Container, Row, Col } from "reactstrap";
 
 const Home = () => {
   // useEffect(() => {
@@ -15,11 +13,14 @@ const Home = () => {
   // }, []);
 
   return (
-    <div className="Home">
-      <Container>
-        <SharedStats />
-      </Container>
-    </div>
+    <Container>
+      <Row>
+        <Col sm={4}>hej</Col>
+        <Col sm={8}>
+          <SharedStats />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_TOURNAMENTS,
   GET_TOURNAMENTS_BY_USERID,
+  GET_TOURNAMENTS_BY_USERID_EMPTY,
   ADD_TOURNAMENT,
   DELETE_TOURNAMENT,
   TOURNAMENTS_LOADING,
@@ -10,16 +11,24 @@ import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
 
 export const getTournamentsByUserId = (userId) => (dispatch) => {
-  console.log("action called");
   dispatch(setTournamentsLoading());
   axios
     .get(`/api/tournaments/${userId}`)
-    .then((res) =>
-      dispatch({
-        type: GET_TOURNAMENTS_BY_USERID,
-        payload: res.data,
-      })
-    )
+    .then((res) => {
+      if (res.data.length !== 0) {
+        console.log("Item exists");
+        dispatch({
+          type: GET_TOURNAMENTS_BY_USERID,
+          payload: res.data,
+        });
+      } else {
+        dispatch({
+          type: GET_TOURNAMENTS_BY_USERID_EMPTY,
+          payload: true,
+        });
+        console.log("NO ITEM");
+      }
+    })
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );

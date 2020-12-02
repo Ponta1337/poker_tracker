@@ -4,7 +4,6 @@ const auth = require("../../middleware/auth");
 
 //Item model
 const Tournament = require("../../models/Tournament");
-//const User = require("../../models/User");
 
 //@route GET api/tournaments
 //@desc  Get all tournaments

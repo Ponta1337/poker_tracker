@@ -1,23 +1,29 @@
-import React, { useState, useRef, useEffect } from "react";
-
 import TournamentModal from "../TournamentModal";
 import TournamentListFunc from "../TournamentListFunc";
+//import UserStatsChart from "./UserStatsChart";
+import UserStatsChart from "./UserStatsChart";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect } from "react";
+
+import store from "../../store";
+import { loadUser } from "../../actions/authActions";
 
 import { Container } from "reactstrap";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-
 const MyTournaments = () => {
+  // useEffect(() => {
+  //   store.dispatch(loadUser());
+  // }, []);
+
   return (
-    // <Provider store={store}>
     <div className="MyTournaments">
       <Container>
-        <TournamentModal />
+        {/* <TournamentModal /> */}
         <TournamentListFunc />
-        {/* <TournamentList /> */}
+        {/* <UserStatsChart /> */}
+        <UserStatsChart />
       </Container>
     </div>
-    //</Provider>
   );
 };
 

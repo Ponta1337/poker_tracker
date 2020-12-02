@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import dateFormat from "dateformat";
 import {
   Button,
   Modal,
@@ -7,16 +8,21 @@ import {
   Container,
   ListGroup,
   ListGroupItem,
+  Col,
   Table,
+  ButtonGroup,
+  Row,
 } from "reactstrap";
 
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
 import {
-  getTournaments,
   deleteTournament,
   getTournamentsByUserId,
 } from "../actions/tournamentActions";
+import { userTotalCashesSum } from "./MyTournaments/UserStats";
+import TournamentModal from "./TournamentModal";
+import TournamentModalFunc from "./TournamentModalFunc";
 
 function TournamentListFunc(props) {
   const [editMode, setEditMode] = useState(false);
@@ -26,9 +32,13 @@ function TournamentListFunc(props) {
   const { getTournamentsByUserId } = props;
   const { tournaments } = props.tournament;
 
+  const [tournamentsByUserId, setTournamentsByUserId] = useState([]);
+
   useEffect(() => {
     getTournamentsByUserId(props.currentUser._id);
   }, []);
+
+  //setTournamentsByUserId(tournaments);
 
   const onDeleteClick = () => {
     props.deleteTournament(tournamentId);
@@ -53,6 +63,9 @@ function TournamentListFunc(props) {
     setModal(!modal);
   };
 
+  const newDateFormat = dateFormat(tournaments.date, "yyyy/m/d");
+  console.log("JAAAAAA" + tournaments.date);
+
   const renderTournament = (tournament, index) => {
     return (
       <tr key={index}>
@@ -62,94 +75,106 @@ function TournamentListFunc(props) {
               className="remove-btn"
               color="danger"
               size="sm"
-              // onClick={onClickSetIdAndToggle.bind(this, _id)}
+              onClick={onClickSetIdAndToggle.bind(this, tournament._id)}
             >
-              Remove &times;
+              &times;
             </Button>
           </td>
         ) : null}
+
+        {/* kör en .map och TransitionGroup + CSSTransition */}
         <td>{tournament.name}</td>
-        <td>{tournament.userName}</td>
+        <td>{tournament.buyInCost}</td>
         <td>{tournament.cashedFor}</td>
         <td>{tournament.placement}</td>
-        <td>{tournament.date}</td>
+        <td>{dateFormat(tournament.date, "m/d/yyyy")}</td>
       </tr>
     );
   };
 
   return (
     <Container>
-      <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>
-          Are you sure you want to delete this tournament?
-        </ModalHeader>
-        <ModalBody>
-          <Button
-            onClick={onDeleteClick}
-            color="dark"
-            style={{ marginTop: "2rem" }}
-            block
-          >
-            Yes
-          </Button>
-          <Button
-            onClick={toggle}
-            color="dark"
-            style={{ marginTop: "2rem" }}
-            block
-          >
-            No
-          </Button>
-        </ModalBody>
-      </Modal>
+      <Row>
+        <Col>{userTotalCashesSum(tournaments)}</Col>
+        <Col>
+          <Modal isOpen={modal} toggle={toggle}>
+            <ModalHeader toggle={toggle}>
+              Are you sure you want to delete this tournament?
+            </ModalHeader>
+            <ModalBody>
+              <Button
+                onClick={onDeleteClick}
+                color="dark"
+                style={{ marginTop: "2rem" }}
+                block
+              >
+                Yes
+              </Button>
+              <Button
+                onClick={toggle}
+                color="dark"
+                style={{ marginTop: "2rem" }}
+                block
+              >
+                No
+              </Button>
+            </ModalBody>
+          </Modal>
+          <ButtonGroup aria-label="handle-tournaments">
+            <Button
+              onClick={onEditClick}
+              color="dark"
+              style={{ marginBottom: "2rem" }}
+            >
+              {editBtnText}
+            </Button>
+            {/* <TournamentModal /> */}
+            <TournamentModalFunc />
+          </ButtonGroup>
 
-      <Button
-        onClick={onEditClick}
-        color="primary"
-        style={{ marginBottom: "2rem" }}
-      >
-        {editBtnText}
-      </Button>
-      <ListGroup>
+          {/* <ListGroup>
         <TransitionGroup className="tournament-list">
-          {tournaments.map(
-            ({ _id, name, placement, cashedFor, userName, date }) => (
-              <CSSTransition key={_id} timeout={500} classNames="fade">
-                <ListGroupItem>
-                  {props.isAuthenticated && editMode ? (
-                    <Button
-                      className="remove-btn"
-                      color="danger"
-                      size="sm"
-                      onClick={onClickSetIdAndToggle.bind(this, _id)}
-                    >
-                      Remove &times;
-                    </Button>
-                  ) : null}
+          {tournaments.map(({ _id, name, placement, cashedFor, userName }) => (
+            <CSSTransition key={_id} timeout={500} classNames="fade">
+              <ListGroupItem>
+                {props.isAuthenticated && editMode ? (
+                  <Button
+                    className="remove-btn"
+                    color="danger"
+                    size="sm"
+                    onClick={onClickSetIdAndToggle.bind(this, _id)}
+                  >
+                    Remove &times;
+                  </Button>
+                ) : null}
 
-                  {`${userName} Won $${cashedFor} for ${placement}th place in ${name} on ${date}`}
-                </ListGroupItem>
-              </CSSTransition>
-            )
-          )}
+                {`${userName} Won $${cashedFor} for ${placement}th place in ${name} on ${newDateFormat}`}
+              </ListGroupItem>
+            </CSSTransition>
+          ))}
         </TransitionGroup>
-      </ListGroup>
-      <Table>
-        <thead>
-          <tr>
-            {editMode ? <th></th> : null}
-            <th>Tournament</th>
-            <th>Username</th>
-            <th>Cash</th>
-            <th>Placement</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* {editMode ? <td>YES</td> : null} */}
-          {tournaments.map(renderTournament)}
-        </tbody>
-      </Table>
+      </ListGroup> */}
+          {props.tournament.isEmpty === false &&
+          props.tournament.tournamentsByUserIdisLoaded ? (
+            <Table>
+              <thead>
+                <tr>
+                  {editMode ? <th></th> : null}
+                  <th>Tournament </th>
+                  <th>Buyin</th>
+                  <th>Cash</th>
+                  <th>Placement</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* {editMode ? <td>YES</td> : null} */}
+                {tournaments.map(renderTournament)}
+              </tbody>
+            </Table>
+          ) : null}
+        </Col>
+      </Row>
     </Container>
   );
 }
@@ -164,7 +189,6 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  getTournaments,
   getTournamentsByUserId,
   deleteTournament,
 })(TournamentListFunc);

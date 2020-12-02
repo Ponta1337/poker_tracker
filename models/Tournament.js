@@ -18,6 +18,7 @@ const TournamentSchema = new mongoose.Schema({
   },
   userId: {
     type: String,
+    default: "",
   },
   userName: {
     type: String,

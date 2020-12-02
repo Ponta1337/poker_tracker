@@ -4,11 +4,14 @@ import {
   DELETE_TOURNAMENT,
   TOURNAMENTS_LOADING,
   GET_TOURNAMENTS_BY_USERID,
+  GET_TOURNAMENTS_BY_USERID_EMPTY,
 } from "../actions/types";
 
 const initialState = {
   tournaments: [],
   loading: false,
+  isEmpty: false,
+  tournamentsByUserIdisLoaded: false,
 };
 
 export default function (state = initialState, action) {
@@ -23,11 +26,17 @@ export default function (state = initialState, action) {
       return {
         ...state,
         tournaments: action.payload,
-        // tournaments: state.tournaments.filter(
-        //   (tournament) => tournament.userId === action.payload
-        // ),
+        loading: false,
+        tournamentsByUserIdisLoaded: true,
+      };
+    case GET_TOURNAMENTS_BY_USERID_EMPTY:
+      return {
+        ...state,
+        tournaments: [{}],
+        isEmpty: true,
         loading: false,
       };
+
     case DELETE_TOURNAMENT:
       return {
         ...state,
@@ -39,6 +48,8 @@ export default function (state = initialState, action) {
       return {
         ...state,
         tournaments: [action.payload, ...state.tournaments],
+        isEmpty: false,
+        tournamentsByUserIdisLoaded: true,
       };
     case TOURNAMENTS_LOADING:
       return {
