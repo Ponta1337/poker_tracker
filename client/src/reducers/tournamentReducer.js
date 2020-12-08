@@ -3,6 +3,7 @@ import {
   ADD_TOURNAMENT,
   DELETE_TOURNAMENT,
   TOURNAMENTS_LOADING,
+  USER_STATS,
   GET_TOURNAMENTS_BY_USERID,
   GET_TOURNAMENTS_BY_USERID_EMPTY,
 } from "../actions/types";
@@ -12,6 +13,7 @@ const initialState = {
   loading: false,
   isEmpty: false,
   tournamentsByUserIdisLoaded: false,
+  userStats: false,
 };
 
 export default function (state = initialState, action) {
@@ -55,6 +57,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: true,
+      };
+    case USER_STATS:
+      return {
+        ...state,
+        userStats: true,
       };
     default:
       return state;

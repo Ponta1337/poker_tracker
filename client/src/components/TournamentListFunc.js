@@ -20,7 +20,7 @@ import {
   deleteTournament,
   getTournamentsByUserId,
 } from "../actions/tournamentActions";
-import { userTotalCashesSum } from "./MyTournaments/UserStats";
+import UserStats, { userTotalCashesSum } from "./MyTournaments/UserStats";
 import TournamentModal from "./TournamentModal";
 import TournamentModalFunc from "./TournamentModalFunc";
 
@@ -35,7 +35,12 @@ function TournamentListFunc(props) {
   const [tournamentsByUserId, setTournamentsByUserId] = useState([]);
 
   useEffect(() => {
+    // if (props.auth.isLoading === false) {
+    //   getTournamentsByUserId(props.currentUser._id);
+    // } else {
+    //   console.log("loading user");
     getTournamentsByUserId(props.currentUser._id);
+    // }
   }, []);
 
   //setTournamentsByUserId(tournaments);
@@ -95,7 +100,7 @@ function TournamentListFunc(props) {
   return (
     <Container>
       <Row>
-        <Col>{userTotalCashesSum(tournaments)}</Col>
+        {/* <UserStats /> */}
         <Col>
           <Modal isOpen={modal} toggle={toggle}>
             <ModalHeader toggle={toggle}>

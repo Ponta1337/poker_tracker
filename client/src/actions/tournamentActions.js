@@ -6,6 +6,7 @@ import {
   ADD_TOURNAMENT,
   DELETE_TOURNAMENT,
   TOURNAMENTS_LOADING,
+  USER_STATS,
 } from "./types";
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
@@ -79,5 +80,11 @@ export const deleteTournament = (id) => (dispatch, getState) => {
 export const setTournamentsLoading = () => {
   return {
     type: TOURNAMENTS_LOADING,
+  };
+};
+
+export const setUserStats = () => {
+  return {
+    type: USER_STATS,
   };
 };
