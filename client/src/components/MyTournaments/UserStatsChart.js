@@ -62,11 +62,6 @@ function UserStatsChart(props) {
     // console.log(numArr);
     // console.log(cashedForArr);
     jahapp();
-    console.log("numArr " + numArr);
-    console.log("cashedForArr " + cashedForArr);
-    console.log("reversedCashedForArr " + reversedCashedForArr);
-    console.log("cashesData " + cashesData);
-    console.log("test " + test);
     // console.log(Array.from([1, 2, 3, 4, 5], (x) => x + [x]));
   }, [tournaments]);
   return (

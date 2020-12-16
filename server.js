@@ -23,6 +23,7 @@ mongoose
 app.use("/api/tournaments", require("./routes/api/tournaments"));
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
+app.use("/api/stats", require("./routes/api/stats"));
 
 // serve static assets if in prodution
 if (process.env.NODE_ENV === "production") {

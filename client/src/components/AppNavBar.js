@@ -8,6 +8,7 @@ import {
   NavItem,
   Container,
 } from "reactstrap";
+import PlayerSearch from "./PlayerSearch";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import LoginModal from "./auth/LoginModal";
@@ -40,9 +41,15 @@ class AppNavBar extends Component {
             <strong>{user ? `Welcome ${user.name}` : ""}</strong>
           </span>
         </NavItem>
+
         <NavItem>
           <Link to="/MyTournaments" className={"nav-link"}>
-            My Tournaments
+            My Profile
+          </Link>
+        </NavItem>
+        <NavItem>
+          <Link to="/UserProfile" className={"nav-link"}>
+            UserProfile
           </Link>
         </NavItem>
         <NavItem>
@@ -64,7 +71,16 @@ class AppNavBar extends Component {
       <div>
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
-            <NavbarBrand href="/">Poker Tracker</NavbarBrand>
+            <NavItem>
+              <NavbarBrand>
+                <Link to="/" className={"nav-link"} style={{ color: "white" }}>
+                  Poker Tracker
+                </Link>
+              </NavbarBrand>
+            </NavItem>
+            <NavItem>
+              <PlayerSearch />
+            </NavItem>
 
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>

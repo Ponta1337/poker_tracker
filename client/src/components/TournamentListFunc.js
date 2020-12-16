@@ -21,42 +21,32 @@ import {
   getTournamentsByUserId,
 } from "../actions/tournamentActions";
 import UserStats, { userTotalCashesSum } from "./MyTournaments/UserStats";
-import TournamentModal from "./TournamentModal";
+import TournamentUpdateModal from "./TournamentUpdateModal";
 import TournamentModalFunc from "./TournamentModalFunc";
+import TestFuncAsProps from "./TestFuncAsProps";
+import TournamentDeleteModal from "./TournamentDeleteModal";
 
 function TournamentListFunc(props) {
   const [editMode, setEditMode] = useState(false);
   const [editBtnText, setEditBtnText] = useState("Edit Your Tournaments");
   const [modal, setModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
   const [tournamentId, setTournamentId] = useState(null);
   const { getTournamentsByUserId } = props;
   const { tournaments } = props.tournament;
+  const [editTournament, setEditTournament] = useState(null);
 
   const [tournamentsByUserId, setTournamentsByUserId] = useState([]);
 
   useEffect(() => {
-    // if (props.auth.isLoading === false) {
-    //   getTournamentsByUserId(props.currentUser._id);
-    // } else {
-    //   console.log("loading user");
-    getTournamentsByUserId(props.currentUser._id);
-    // }
+    if (props.isAuthenticated) {
+      getTournamentsByUserId(props.currentUser._id);
+    }
   }, []);
-
-  //setTournamentsByUserId(tournaments);
 
   const onDeleteClick = () => {
     props.deleteTournament(tournamentId);
     toggle();
-  };
-  const onEditClick = () => {
-    setEditMode(!editMode);
-
-    if (editBtnText === "Stop Editing") {
-      setEditBtnText("Edit Your Tournaments");
-    } else {
-      setEditBtnText("Stop Editing");
-    }
   };
 
   const onClickSetIdAndToggle = (id) => {
@@ -68,98 +58,66 @@ function TournamentListFunc(props) {
     setModal(!modal);
   };
 
-  const newDateFormat = dateFormat(tournaments.date, "yyyy/m/d");
-  console.log("JAAAAAA" + tournaments.date);
+  const editModalToggle = () => {
+    setEditModal(!editModal);
+  };
+  const onClickEditTournament = (tournament) => {
+    setEditTournament(tournament);
+    editModalToggle();
+  };
 
   const renderTournament = (tournament, index) => {
     return (
       <tr key={index}>
-        {editMode ? (
-          <td>
-            <Button
-              className="remove-btn"
-              color="danger"
-              size="sm"
-              onClick={onClickSetIdAndToggle.bind(this, tournament._id)}
-            >
-              &times;
-            </Button>
-          </td>
-        ) : null}
+        {/* {editMode ? ( */}
 
+        {/* ) : null} */}
+        {console.log(tournament)}
         {/* kör en .map och TransitionGroup + CSSTransition */}
         <td>{tournament.name}</td>
         <td>{tournament.buyInCost}</td>
         <td>{tournament.cashedFor}</td>
         <td>{tournament.placement}</td>
-        <td>{dateFormat(tournament.date, "m/d/yyyy")}</td>
+        <td>{dateFormat(tournament.date, "yyyy-m-d")}</td>
+
+        <td>
+          {/* <Button
+            className="remove-btn"
+            color="danger"
+            size="sm"
+            onClick={onClickSetIdAndToggle.bind(this, tournament._id)}
+          >
+            &times;
+          </Button> */}
+          <TournamentDeleteModal
+            tournamentToDeleteId={(this, tournament._id)}
+          />
+          {/* <Button
+            className="edit-btn"
+            color="primary"
+            size="sm"
+            onClick={onClickEditTournament.bind(this, tournament)}
+          >
+            edit
+          </Button> */}
+
+          <TournamentUpdateModal tourn={(this, tournament)} />
+        </td>
       </tr>
     );
   };
 
   return (
     <Container>
+      {/* {console.log("tournaments: " + tournaments)} */}
       <Row>
         {/* <UserStats /> */}
         <Col>
-          <Modal isOpen={modal} toggle={toggle}>
-            <ModalHeader toggle={toggle}>
-              Are you sure you want to delete this tournament?
-            </ModalHeader>
-            <ModalBody>
-              <Button
-                onClick={onDeleteClick}
-                color="dark"
-                style={{ marginTop: "2rem" }}
-                block
-              >
-                Yes
-              </Button>
-              <Button
-                onClick={toggle}
-                color="dark"
-                style={{ marginTop: "2rem" }}
-                block
-              >
-                No
-              </Button>
-            </ModalBody>
-          </Modal>
           <ButtonGroup aria-label="handle-tournaments">
-            <Button
-              onClick={onEditClick}
-              color="dark"
-              style={{ marginBottom: "2rem" }}
-            >
-              {editBtnText}
-            </Button>
-            {/* <TournamentModal /> */}
             <TournamentModalFunc />
           </ButtonGroup>
 
-          {/* <ListGroup>
-        <TransitionGroup className="tournament-list">
-          {tournaments.map(({ _id, name, placement, cashedFor, userName }) => (
-            <CSSTransition key={_id} timeout={500} classNames="fade">
-              <ListGroupItem>
-                {props.isAuthenticated && editMode ? (
-                  <Button
-                    className="remove-btn"
-                    color="danger"
-                    size="sm"
-                    onClick={onClickSetIdAndToggle.bind(this, _id)}
-                  >
-                    Remove &times;
-                  </Button>
-                ) : null}
-
-                {`${userName} Won $${cashedFor} for ${placement}th place in ${name} on ${newDateFormat}`}
-              </ListGroupItem>
-            </CSSTransition>
-          ))}
-        </TransitionGroup>
-      </ListGroup> */}
-          {props.tournament.isEmpty === false &&
+          {props.tournament.tournaments.length !== 0 &&
           props.tournament.tournamentsByUserIdisLoaded ? (
             <Table>
               <thead>
@@ -177,7 +135,9 @@ function TournamentListFunc(props) {
                 {tournaments.map(renderTournament)}
               </tbody>
             </Table>
-          ) : null}
+          ) : (
+            <div>Your tournaments will appear here</div>
+          )}
         </Col>
       </Row>
     </Container>

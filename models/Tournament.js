@@ -9,19 +9,23 @@ const TournamentSchema = new mongoose.Schema({
   },
   buyInCost: {
     type: Number,
+    required: true,
   },
   cashedFor: {
     type: Number,
+    required: true,
   },
   placement: {
     type: Number,
+    required: true,
   },
   userId: {
     type: String,
-    default: "",
+    required: true,
   },
   userName: {
     type: String,
+    required: true,
   },
   date: {
     type: Date,

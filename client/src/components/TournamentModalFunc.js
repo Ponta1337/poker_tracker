@@ -49,7 +49,6 @@ function TournamentModalFunc(props) {
       userId: props.auth.user._id,
       userName: props.auth.user.name,
     });
-    console.log(onChangeValues);
   };
 
   const onSubmit = (e) => {
@@ -62,8 +61,6 @@ function TournamentModalFunc(props) {
       cashedFor: onChangeValues.cashedFor,
       buyInCost: onChangeValues.buyInCost,
     };
-    console.log("hej" + onChangeValues.name);
-    console.log(onChangeValues);
     //Add tournament via addTournament action
     props.addTournament(newTournament);
 

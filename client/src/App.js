@@ -3,6 +3,7 @@ import AppNavBar from "./components/AppNavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MyTournaments from "./components/MyTournaments/MyTournaments";
 import Home from "./components/Home/Home";
+import UserProfile from "./components/UserProfile/UserProfile";
 
 import { Container } from "reactstrap";
 
@@ -27,6 +28,8 @@ const App = () => {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/mytournaments" exact component={MyTournaments} />
+            <Route path="/user/:userId" component={UserProfile} />
+            {/* <Route path="/:userId" children={UserProfile} /> */}
           </Switch>
           <Container>
             {/* <TournamentModal />

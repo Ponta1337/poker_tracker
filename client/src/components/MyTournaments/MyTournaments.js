@@ -3,20 +3,25 @@ import TournamentListFunc from "../TournamentListFunc";
 //import UserStatsChart from "./UserStatsChart";
 import UserStatsChart from "./UserStatsChart";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import UserStats from "./UserStats";
-
-import store from "../../store";
-import { loadUser } from "../../actions/authActions";
-
-import { Container } from "reactstrap";
-import { setUserStats } from "../../actions/tournamentActions";
+import UserProfile from "../UserProfile/UserProfile";
+import { Container, Row, Col } from "reactstrap";
+import { getUserStats } from "../../actions/userStatsActions";
+import TestFuncAsProps from "../TestFuncAsProps";
 
 function MyTournaments(props) {
+  const { isAuthenticated } = props;
+  const { getUserStats } = props;
+  const { tournaments } = props.tournament;
+
   useEffect(() => {
-    props.setUserStats();
-  }, []);
+    if (isAuthenticated) {
+      getUserStats(props.auth.user._id);
+    }
+  }, [isAuthenticated, tournaments]);
+
   return (
     <div className="MyTournaments">
       {!props.isAuthenticated &&
@@ -27,11 +32,16 @@ function MyTournaments(props) {
         </div>
       ) : (
         <Container>
-          {/* <TournamentModal /> */}
-          <TournamentListFunc />
-          <UserStats />
-          <UserStatsChart />
-          {/* <UserStatsChart /> */}
+          <Row>
+            <Col>
+              {/* <TestFuncAsProps /> */}
+              <UserStats />
+              <UserStatsChart />
+            </Col>
+            <Col>
+              <TournamentListFunc />
+            </Col>
+          </Row>
         </Container>
       )}
     </div>
@@ -44,4 +54,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { setUserStats })(MyTournaments);
+export default connect(mapStateToProps, { getUserStats })(MyTournaments);

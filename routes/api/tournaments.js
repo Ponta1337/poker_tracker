@@ -9,8 +9,10 @@ const Tournament = require("../../models/Tournament");
 //@desc  Get all tournaments
 //@access Public
 
+// { cashedFor: { $gt: 0 } },
 router.get("/", (req, res) => {
   Tournament.find()
+    .limit(10)
     .sort({ date: -1 })
     .then((tournaments) => res.json(tournaments));
 });
@@ -23,6 +25,34 @@ router.get("/:userId", (req, res) => {
   Tournament.find({ userId: req.params.userId })
     .sort({ date: -1 })
     .then((tournaments) => res.json(tournaments));
+});
+
+//@route PUT api/tournaments
+//@desc  Edits an item
+//@access Private
+
+router.put("/tournamentId", auth, (req, res) => {
+  Tournament.findOneAndUpdate(
+    { _id: req.body._id },
+    {
+      name: req.body.name,
+      placement: req.body.placement,
+      cashedFor: req.body.cashedFor,
+      buyInCost: req.body.buyInCost,
+      date: req.body.date,
+    },
+    {
+      useFindAndModify: false,
+      //returnNewDocument: true,
+    },
+
+    (err) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("Tournament Edited");
+    }
+  ).then((tournament) => res.json(tournament));
 });
 
 //@route POST api/tournaments
