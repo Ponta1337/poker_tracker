@@ -43,13 +43,8 @@ class AppNavBar extends Component {
         </NavItem>
 
         <NavItem>
-          <Link to="/MyTournaments" className={"nav-link"}>
+          <Link to="/myprofile" className={"nav-link"}>
             My Profile
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/UserProfile" className={"nav-link"}>
-            UserProfile
           </Link>
         </NavItem>
         <NavItem>
@@ -71,16 +66,16 @@ class AppNavBar extends Component {
       <div>
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
-            <NavItem>
+            <NavItem style={{ listStyleType: "none" }}>
               <NavbarBrand>
                 <Link to="/" className={"nav-link"} style={{ color: "white" }}>
                   Poker Tracker
                 </Link>
               </NavbarBrand>
             </NavItem>
-            <NavItem>
+            {/* <NavItem style={{ listStyleType: "none" }}>
               <PlayerSearch />
-            </NavItem>
+            </NavItem> */}
 
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>

@@ -1,68 +1,63 @@
 import React, { useEffect } from "react";
 import dateFormat from "dateformat";
-import { Container, ListGroup, ListGroupItem } from "reactstrap";
+import { Container, ListGroup, ListGroupItem, Spinner } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
 import { getTournaments } from "../actions/tournamentActions";
 import { getTournamentsByUserId } from "../actions/tournamentActions";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import LeaderBoardList from "./LeaderBoardList";
+import ordinal from "ordinal";
+import { getUsers } from "../actions/userActions";
 
 function SharedStats(props) {
   const { getTournaments } = props;
 
-  // const moment1 = moment().startOf("day").fromNow();
-
   useEffect(() => {
     getTournaments();
+    // props.getUsers();
   }, []);
 
   const { tournaments } = props.tournament;
 
-  // const handleClick = (hej) => {
-  //   // SetEttOrd(hej);
-  //   alert(hej);
-  //   //props.getTournamentsByUserId(hej);
-  //   //<UserProfile ettOrd={ettOrd} />;
-  // };
-
   return (
     <Container>
-      <LeaderBoardList />
-      Recent results!
-      <ListGroup>
-        <TransitionGroup className="tournament-list">
-          {tournaments.map(
-            ({ _id, name, placement, cashedFor, userName, date, userId }) => (
-              // cashedFor > 0 && (
-              <CSSTransition key={_id} timeout={500} classNames="fade">
-                {/* <NavItem> */}
-                {/* <Link to={`/user/:${userId}`}> */}
-                <ListGroupItem
-                // action
-                // tag="a"
-                // onClick={handleClick.bind(this, userId)}
-                // href="/userprofile"
-                >
-                  <div>
-                    <Link to={`/user/${userId}`}>{userName}</Link> -{" "}
-                    {moment(date).fromNow()}
-                  </div>
-                  {/* <Link to={`/user/${userId}`}>{userName}</Link> */}
-                  {` won $${cashedFor} for ${placement}th place in ${name} on ${dateFormat(
-                    date,
-                    "yyyy/m/d"
-                  )}`}
-                </ListGroupItem>
-                {/* </Link> */}
-                {/* </NavItem> */}
-              </CSSTransition>
-            )
-            // )
-          )}
-        </TransitionGroup>
-      </ListGroup>
+      {!props.tournament.loading ? (
+        <ListGroup>
+          <TransitionGroup className="tournament-list">
+            {tournaments.map(
+              ({ _id, name, placement, cashedFor, userName, date, userId }) => (
+                <CSSTransition key={_id} timeout={500} classNames="fade">
+                  <ListGroupItem>
+                    <div>
+                      <Link
+                        style={{
+                          textDecoration: "none",
+                          color: "Crimson",
+                        }}
+                        to={`/user/${userId}`}
+                      >
+                        {userName}
+                      </Link>{" "}
+                      - <small>{moment(date).fromNow()}</small>
+                    </div>
+                    {` Won $${cashedFor} for ${ordinal(
+                      placement
+                    )} place in ${name} on ${dateFormat(date, "yyyy/m/d")}`}
+                  </ListGroupItem>
+                </CSSTransition>
+              )
+            )}
+          </TransitionGroup>
+        </ListGroup>
+      ) : (
+        <Spinner
+          size="lg"
+          animation="grow"
+          color="dark"
+          style={{ justifyContent: "center" }}
+        />
+      )}
     </Container>
   );
 }
@@ -78,4 +73,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   getTournaments,
   getTournamentsByUserId,
+  getUsers,
 })(SharedStats);

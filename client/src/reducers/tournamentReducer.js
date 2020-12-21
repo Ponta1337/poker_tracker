@@ -5,6 +5,7 @@ import {
   EDIT_TOURNAMENT,
   TOURNAMENTS_LOADING,
   GET_TOURNAMENTS_BY_USERID,
+  GET_TOURNAMENTS_BY_USERNAME,
 } from "../actions/types";
 
 const initialState = {
@@ -23,6 +24,7 @@ export default function (state = initialState, action) {
         tournaments: action.payload,
         loading: false,
       };
+    case GET_TOURNAMENTS_BY_USERNAME:
     case GET_TOURNAMENTS_BY_USERID:
       return {
         ...state,

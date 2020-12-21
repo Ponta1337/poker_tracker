@@ -8,6 +8,7 @@ import {
   Label,
   Input,
   ModalHeader,
+  Alert,
 } from "reactstrap";
 
 import { connect } from "react-redux";
@@ -15,32 +16,16 @@ import { addTournament } from "../actions/tournamentActions";
 import PropTypes from "prop-types";
 
 function TournamentModalFunc(props) {
-  // state = {
-  //   modal: false,
-  // };
   const [modal, setModal] = useState(false);
   const [onChangeValues, setOnChangeValues] = useState({
     userId: "",
     userName: "",
-    // target: { name: "", value: null },
   });
-
-  // static propTypes = {
-  //   isAuthenticated: PropTypes.bool,
-  //   auth: PropTypes.object.isRequired,
-  // };
+  const [tournamentAdded, setTournamentAdded] = useState(false);
 
   const toggle = () => {
     setModal(!modal);
   };
-
-  // onChange = (e) => {
-  //   this.setState({
-  //     [e.target.name]: e.target.value,
-  //     userId: this.props.auth.user._id,
-  //     userName: this.props.auth.user.name,
-  //   });
-  // };
 
   const onChange = (e) => {
     setOnChangeValues({
@@ -63,9 +48,11 @@ function TournamentModalFunc(props) {
     };
     //Add tournament via addTournament action
     props.addTournament(newTournament);
-
+    setTournamentAdded(true);
     //Close modal
     toggle();
+
+    <Alert color="success">This is a success alert — check it out!</Alert>;
   };
   return (
     <div>
@@ -73,9 +60,11 @@ function TournamentModalFunc(props) {
         <Button color="dark" style={{ marginBottom: "2rem" }} onClick={toggle}>
           Add Tournament
         </Button>
-      ) : (
-        <h4 className="mb-3 ml-4">Please log in to manage tournaments </h4>
-      )}
+      ) : null}
+
+      {tournamentAdded ? (
+        <Alert color="success">Tournament added!</Alert>
+      ) : null}
 
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Add a tournament</ModalHeader>

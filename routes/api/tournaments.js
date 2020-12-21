@@ -27,6 +27,12 @@ router.get("/:userId", (req, res) => {
     .then((tournaments) => res.json(tournaments));
 });
 
+router.get("/:userName", (req, res) => {
+  Tournament.find({ userName: req.params.userName })
+    .sort({ date: -1 })
+    .then((tournaments) => res.json(tournaments));
+});
+
 //@route PUT api/tournaments
 //@desc  Edits an item
 //@access Private

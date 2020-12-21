@@ -18,7 +18,7 @@ export const getUserStats = (userId) => (dispatch) => {
 };
 
 export const getLeaderBoardStats = () => (dispatch) => {
-  // dispatch(setStatsLoading());
+  dispatch(setStatsLoading());
   axios.get("/api/stats/leaderboard/").then((res) => {
     dispatch({
       type: GET_LEADERBOARD_STATS,

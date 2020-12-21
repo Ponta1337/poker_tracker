@@ -20,42 +20,13 @@ import PropTypes from "prop-types";
 
 function TournamentUpdateModal(props) {
   const [modal, setModal] = useState(false);
-  const [onChangeValues, setOnChangeValues] = useState({
-    name: props.tournamentToEdit.name,
-  });
-
-  const [editModal, setEditModal] = useState(false);
-  const [tournamentId, setTournamentId] = useState(null);
-  const { tournaments } = props.tournament;
-  const [editTournament, setEditTournament] = useState(null);
-
-  // const toggle = () => {
-  //   setModal(!modal);
-  // };
-
-  const onClickSetIdAndToggle = (id) => {
-    setTournamentId(id);
-    toggle();
-  };
+  const [onChangeValues, setOnChangeValues] = useState({});
 
   const toggle = () => {
     setModal(!modal);
   };
 
-  const editModalToggle = () => {
-    setEditModal(!editModal);
-  };
-  const onClickEditTournament = (tournament) => {
-    setEditTournament(tournament);
-    // editModalToggle();
-    toggle();
-    // console.log(tournament);
-    console.log(editTournament);
-  };
-
   const onClickEditTournamentTest = () => {
-    setEditTournament(props.tournamentToEdit);
-
     setOnChangeValues({
       ...onChangeValues,
 
@@ -81,16 +52,12 @@ function TournamentUpdateModal(props) {
 
     const editedTournament = {
       _id: props.tournamentToEdit._id,
-      // userName: props.tournamentToEdit.userName,
       name: onChangeValues.name,
       placement: onChangeValues.placement,
       cashedFor: onChangeValues.cashedFor,
       buyInCost: onChangeValues.buyInCost,
       date: onChangeValues.date,
     };
-    console.log("efter submit", editedTournament);
-    console.log("efter sbmit tournamentToEdit : ", props.tournamentToEdit);
-    console.log("efter submit props.yo: ", props.yo);
     //Edit tournament via editTournament action
 
     props.editTournament(editedTournament);
@@ -110,14 +77,6 @@ function TournamentUpdateModal(props) {
       >
         edit
       </Button>
-
-      {/* {props.isAuthenticated ? (
-        <Button color="dark" style={{ marginBottom: "2rem" }} onClick={toggle}>
-          Edit Tournamentsss
-        </Button>
-      ) : (
-        <h4 className="mb-3 ml-4">Please log in to manage tournaments </h4>
-      )} */}
 
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Edit a tournament </ModalHeader>
@@ -144,9 +103,9 @@ function TournamentUpdateModal(props) {
               />
               <Label for="buyInCost">Buy-in</Label>
               <InputGroup>
-                <InputGroupAddon addonType="prepend">
+                {/* <InputGroupAddon addonType="prepend">
                   <InputGroupText>SEK</InputGroupText>
-                </InputGroupAddon>
+                </InputGroupAddon> */}
                 <Input
                   type="text"
                   name="buyInCost"
@@ -159,9 +118,9 @@ function TournamentUpdateModal(props) {
 
               <Label for="cashedFor">Cashed</Label>
               <InputGroup>
-                <InputGroupAddon addonType="prepend">
+                {/* <InputGroupAddon addonType="prepend">
                   <InputGroupText>SEK</InputGroupText>
-                </InputGroupAddon>
+                </InputGroupAddon> */}
                 <Input
                   type="text"
                   name="cashedFor"
@@ -176,8 +135,6 @@ function TournamentUpdateModal(props) {
                 type="date"
                 name="date"
                 id="date"
-                // placeholder="Tournament Date"
-                // defaultValue={onChangeValues.date}
                 defaultValue={dateFormat(onChangeValues.date, "yyyy-mm-dd")}
                 onChange={onChange}
               />
@@ -188,19 +145,18 @@ function TournamentUpdateModal(props) {
           </Form>
         </ModalBody>
       </Modal>
-      {/* </div> */}
     </Fragment>
   );
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const yo = ownProps.tourn;
+  const tournamentToEditState = ownProps.tourn;
 
   return {
     tournament: state.tournament,
     isAuthenticated: state.auth.isAuthenticated,
     auth: state.auth,
-    tournamentToEdit: yo,
+    tournamentToEdit: tournamentToEditState,
   };
 };
 

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 
 import { Button, Modal, ModalBody, ModalHeader } from "reactstrap";
 
@@ -11,11 +11,6 @@ import {
 function TournamentDeleteModal(props) {
   const [modal, setModal] = useState(false);
   const [tournamentId, setTournamentId] = useState(null);
-  // const { getTournamentsByUserId } = props;
-  // const { tournaments } = props.tournament;
-  // const [editTournament, setEditTournament] = useState(null);
-
-  // const [tournamentsByUserId, setTournamentsByUserId] = useState([]);
 
   const onDeleteClick = () => {
     props.deleteTournament(tournamentId);
@@ -30,14 +25,6 @@ function TournamentDeleteModal(props) {
   const toggle = () => {
     setModal(!modal);
   };
-
-  // const editModalToggle = () => {
-  //   setEditModal(!editModal);
-  // };
-  // const onClickEditTournament = (tournament) => {
-  //   setEditTournament(tournament);
-  //   editModalToggle();
-  // };
 
   return (
     <Fragment>

@@ -18,3 +18,7 @@
   opacity: 0.01;
   transition: opacity 1000ms ease-in;
 }
+
+body {
+  background-color: rgb(233, 233, 233);
+}

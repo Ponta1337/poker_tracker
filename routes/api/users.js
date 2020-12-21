@@ -56,21 +56,23 @@ router.post("/", (req, res) => {
   });
 });
 
-// router.get("/:name", (req, res) => {
-//   User.findOne(
-//     { name: req.params.name },
-//     {
-//       _id: "$_id",
-//     }
-//   ).then((user) => res.json(user));
-// });
-
 router.get("/:name", (req, res) => {
   //res.send("/5fd914443452ee21d5ddad2a");
   User.findOne(
     { name: req.params.name },
     {
       _id: "$_id",
+    }
+  ).then((user) => res.json(user));
+});
+
+router.get("/username", (req, res) => {
+  //res.send("/5fd914443452ee21d5ddad2a");
+  User.find(
+    {},
+    {
+      name: "$name",
+      // _id: 0,
     }
   ).then((user) => res.json(user));
 });

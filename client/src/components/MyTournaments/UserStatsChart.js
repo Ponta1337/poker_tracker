@@ -26,17 +26,6 @@ function UserStatsChart(props) {
     return test;
   };
 
-  // const test = [];
-  // const numbers = [1, 2, 3, 4, 5, 6, 7, 8];
-  // const jahapp = () => {
-  //   let ny = 0;
-  //   for (let i = 0; i < numbers.length; i++) {
-  //     ny = ny += numbers[i];
-  //     test.push(ny);
-  //   }
-  //   return test;
-  // };
-
   const chart = () => {
     setChartData({
       labels: numArr,
@@ -44,7 +33,6 @@ function UserStatsChart(props) {
       datasets: [
         {
           label: "Profit History",
-          // data: [32, 45, 12, 23, 69],
           data: test,
           //   backgroundColor: ["green"],
           borderWidth: 4,
@@ -59,13 +47,10 @@ function UserStatsChart(props) {
   //const foreachArr = array.forEach((t) => t);
   useEffect(() => {
     chart();
-    // console.log(numArr);
-    // console.log(cashedForArr);
     jahapp();
-    // console.log(Array.from([1, 2, 3, 4, 5], (x) => x + [x]));
   }, [tournaments]);
   return (
-    <div style={{ height: "500px", width: "500px" }}>
+    <div style={{ height: "500px", width: "500px", marginTop: "40px" }}>
       <Line
         data={chartData}
         options={{

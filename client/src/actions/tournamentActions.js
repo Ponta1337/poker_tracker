@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_TOURNAMENTS,
   GET_TOURNAMENTS_BY_USERID,
+  GET_TOURNAMENTS_BY_USERNAME,
   ADD_TOURNAMENT,
   DELETE_TOURNAMENT,
   EDIT_TOURNAMENT,
@@ -21,19 +22,29 @@ export const getTournamentsByUserId = (userId) => (dispatch) => {
         type: GET_TOURNAMENTS_BY_USERID,
         payload: res.data,
       });
-      // }
-      // else {
-      //   dispatch({
-      //     type: GET_TOURNAMENTS_BY_USERID_EMPTY,
-      //     payload: true,
-      //   });
-      //   console.log("NO ITEM");
-      // }
     })
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
+
+export const getTournamentsByUserName = (userName) => (dispatch) => {
+  dispatch(setTournamentsLoading());
+  axios
+    .get(`/api/tournaments/${userName}`)
+    .then((res) => {
+      // if (res.data.length === 0) {
+      console.log("Item exists");
+      dispatch({
+        type: GET_TOURNAMENTS_BY_USERNAME,
+        payload: res.data,
+      });
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
 export const getTournaments = () => (dispatch) => {
   dispatch(setTournamentsLoading());
   axios

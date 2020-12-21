@@ -6,7 +6,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import MyTournaments from "../MyTournaments/MyTournaments";
+
 import UserStats from "../MyTournaments/UserStats";
 
 import {
@@ -15,8 +15,6 @@ import {
   Route,
   useParams,
 } from "react-router-dom";
-
-import SharedStats from "../SharedStats";
 
 import { Container, Row, Col } from "reactstrap";
 import { getUserStats } from "../../actions/userStatsActions";
@@ -31,13 +29,8 @@ function UserProfile(props) {
 
   return (
     <div className="MyTournaments">
-      {/* {!props.tournament.tournamentsByUserIdisLoaded &&
-      !props.tournament.loading ? (
-        <div>
-          <p>loading...</p>
-        </div>
-      ) : ( */}
       <Container>
+        <h3 style={{ textAlign: "center" }}></h3>
         <Row>
           <Col>
             <UserStats />

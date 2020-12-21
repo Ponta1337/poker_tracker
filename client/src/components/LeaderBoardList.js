@@ -1,50 +1,86 @@
-import { useState, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-  // Button,
-  // Modal,
-  // ModalBody,
-  // ModalHeader,
-  // Container,
   ListGroup,
   ListGroupItem,
-
-  // Col,
-  // Table,
-  // ButtonGroup,
-  // Row,
   Card,
-  CardText,
+  Row,
+  Col,
+  Spinner,
+  CardTitle,
 } from "reactstrap";
 
-//import { getUserStats } from "../../actions/userStatsActions";
 import { getLeaderBoardStats } from "../actions/userStatsActions";
 
-//import MyTournaments from "./MyTournaments";
-
 function LeaderBoardList(props) {
-  // const { tournaments } = props.tournament;
   const { stats } = props.userStats;
-  const { tournaments } = props.tournament;
+  const { getLeaderBoardStats } = props;
+  const [rankingIncrement, setRankingIncrement] = useState(3);
 
   useEffect(() => {
-    props.getLeaderBoardStats();
+    getLeaderBoardStats();
   }, []);
 
   return (
-    <div>
-      <Card className="text-left" style={{ width: "18rem" }}>
-        {stats.map(({ _id, totalEarnings }) => (
+    <Fragment>
+      {!props.userStats.loading ? (
+        <Card className="text-left" style={{ width: "24rem", padding: 10 }}>
+          <CardTitle style={{ textAlign: "center" }}>TOP EARNINGS</CardTitle>
           <ListGroup variant="flush">
-            <ListGroupItem>
-              <Link to={`/user/${_id.userId}`}>{_id.userName}</Link>
-              Total Earnings: {totalEarnings}
-            </ListGroupItem>
+            {stats.map(({ _id, totalEarnings }, index) => (
+              <ListGroupItem
+                key={_id}
+                style={{ borderRight: "none", borderLeft: "none" }}
+              >
+                <Row>
+                  <Col sm={1}>{index + 1}</Col>
+                  <Col sm={4}>
+                    <Link
+                      style={{ color: "Crimson" }}
+                      to={`/user/${_id.userId}`}
+                    >
+                      {_id.userName}
+                    </Link>
+                  </Col>
+                  <Col sm={6} style={{ textAlign: "right" }}>
+                    $ {totalEarnings}
+                  </Col>
+                </Row>
+              </ListGroupItem>
+            ))}
           </ListGroup>
-        ))}
-      </Card>
-    </div>
+        </Card>
+      ) : (
+        <Spinner
+          size="lg"
+          animation="grow"
+          color="dark"
+          style={{ justifyContent: "center" }}
+        />
+      )}
+    </Fragment>
+    // <Fragment>
+    //   {/* <Spinner color="dark" /> */}
+    //   <Card className="text-left" style={{ width: "24rem", padding: 10 }}>
+    //     <ListGroup variant="flush">
+    //       {stats.map(({ _id, totalEarnings, index }) => (
+    //         <ListGroupItem
+    //           key={_id}
+    //           style={{ borderRight: "none", borderLeft: "none" }}
+    //         >
+    //           <Row>
+    //             <Col>{index}</Col>
+    //             <Col>
+    //               <Link to={`/user/${_id.userId}`}>{_id.userName}</Link>
+    //             </Col>
+    //             <Col> {totalEarnings}</Col>
+    //           </Row>
+    //         </ListGroupItem>
+    //       ))}
+    //     </ListGroup>
+    //   </Card>
+    // </Fragment>
   );
 }
 

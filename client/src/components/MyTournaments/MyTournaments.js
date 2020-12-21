@@ -1,15 +1,11 @@
-import TournamentModal from "../TournamentModal";
 import TournamentListFunc from "../TournamentListFunc";
-//import UserStatsChart from "./UserStatsChart";
 import UserStatsChart from "./UserStatsChart";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import UserStats from "./UserStats";
-import UserProfile from "../UserProfile/UserProfile";
 import { Container, Row, Col } from "reactstrap";
 import { getUserStats } from "../../actions/userStatsActions";
-import TestFuncAsProps from "../TestFuncAsProps";
 
 function MyTournaments(props) {
   const { isAuthenticated } = props;
@@ -33,12 +29,12 @@ function MyTournaments(props) {
       ) : (
         <Container>
           <Row>
-            <Col>
+            <Col sm={5}>
               {/* <TestFuncAsProps /> */}
               <UserStats />
               <UserStatsChart />
             </Col>
-            <Col>
+            <Col sm={7}>
               <TournamentListFunc />
             </Col>
           </Row>
