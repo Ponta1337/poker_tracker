@@ -61,7 +61,7 @@ router.post("/", (req, res) => {
 //   ).then((user) => res.json(user));
 // });
 
-router.get("/userLogin", auth, (req, res) => {
+router.get("/user", auth, (req, res) => {
   User.findById(req.user._id)
     .select("-password")
     .then((user) => res.json(user));
