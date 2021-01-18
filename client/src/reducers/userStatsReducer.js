@@ -3,13 +3,15 @@ import {
   GET_USER_STATS,
   STATS_LOADING,
   GET_USER_BY_NAME,
+  SEARCH_LOADING,
 } from "../actions/types";
 
 const initialState = {
-  loading: true,
+  loading: false,
   numberOfPlyaedTournaments: null,
   stats: [],
-  userSearch: null,
+  userSearch: "",
+  searchLoading: false,
 };
 
 export default function (state = initialState, action) {
@@ -31,12 +33,17 @@ export default function (state = initialState, action) {
       return {
         ...state,
         userSearch: action.payload,
-        loading: false,
+        searchLoading: false,
       };
     case STATS_LOADING:
       return {
         ...state,
         loading: true,
+      };
+    case SEARCH_LOADING:
+      return {
+        ...state,
+        searchLoading: true,
       };
 
     default:

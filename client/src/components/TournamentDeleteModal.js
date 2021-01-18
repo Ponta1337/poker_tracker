@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 
-import { Button, Modal, ModalBody, ModalHeader } from "reactstrap";
+import { Button, Modal, ModalBody, ModalHeader, Alert } from "reactstrap";
 
 import { connect } from "react-redux";
 import {
@@ -13,7 +13,10 @@ function TournamentDeleteModal(props) {
   const [tournamentId, setTournamentId] = useState(null);
 
   const onDeleteClick = () => {
-    props.deleteTournament(tournamentId);
+    setTimeout(() => {
+      props.deleteTournament(tournamentId);
+    }, 1000);
+
     toggle();
   };
 

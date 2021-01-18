@@ -46,13 +46,16 @@ function TournamentModalFunc(props) {
       cashedFor: onChangeValues.cashedFor,
       buyInCost: onChangeValues.buyInCost,
     };
-    //Add tournament via addTournament action
-    props.addTournament(newTournament);
-    setTournamentAdded(true);
-    //Close modal
-    toggle();
 
-    <Alert color="success">This is a success alert — check it out!</Alert>;
+    props.addTournament(newTournament);
+
+    setTournamentAdded(true);
+
+    setTimeout(() => {
+      setTournamentAdded(false);
+    }, 5000);
+
+    toggle();
   };
   return (
     <div>
@@ -67,12 +70,13 @@ function TournamentModalFunc(props) {
       ) : null}
 
       <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Add a tournament</ModalHeader>
+        <ModalHeader toggle={toggle}>Tournament name</ModalHeader>
         <ModalBody>
           <Form onSubmit={onSubmit}>
             <FormGroup>
-              <Label for="tournament">Tournament</Label>
+              <Label for="tournament">Name of tournament</Label>
               <Input
+                required="true"
                 type="text"
                 name="name"
                 id="tournament"
@@ -81,22 +85,25 @@ function TournamentModalFunc(props) {
               />
               <Label for="buyInCost">Buy-in</Label>
               <Input
+                required="true"
                 type="text"
                 name="buyInCost"
                 id="tournament"
-                placeholder="Add tournament cost"
+                placeholder="Tournament cost"
                 onChange={onChange}
               />
               <Label for="placement">Placement</Label>
               <Input
+                required="true"
                 type="text"
                 name="placement"
                 id="tournament"
-                placeholder="Add your placement"
+                placeholder="Placement"
                 onChange={onChange}
               />
               <Label for="cashedFor">Cashed</Label>
               <Input
+                required="true"
                 type="text"
                 name="cashedFor"
                 id="tournament"

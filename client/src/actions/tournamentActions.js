@@ -16,8 +16,6 @@ export const getTournamentsByUserId = (userId) => (dispatch) => {
   axios
     .get(`/api/tournaments/${userId}`)
     .then((res) => {
-      // if (res.data.length === 0) {
-      console.log("Item exists");
       dispatch({
         type: GET_TOURNAMENTS_BY_USERID,
         payload: res.data,
@@ -33,8 +31,6 @@ export const getTournamentsByUserName = (userName) => (dispatch) => {
   axios
     .get(`/api/tournaments/${userName}`)
     .then((res) => {
-      // if (res.data.length === 0) {
-      console.log("Item exists");
       dispatch({
         type: GET_TOURNAMENTS_BY_USERNAME,
         payload: res.data,

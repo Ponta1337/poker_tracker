@@ -38,7 +38,7 @@ class AppNavBar extends Component {
       <Fragment>
         <NavItem>
           <span className="navbar-text mr-3">
-            <strong>{user ? `Welcome ${user.name}` : ""}</strong>
+            <strong>{user ? `${user.name}` : ""}</strong>
           </span>
         </NavItem>
 
@@ -73,9 +73,9 @@ class AppNavBar extends Component {
                 </Link>
               </NavbarBrand>
             </NavItem>
-            {/* <NavItem style={{ listStyleType: "none" }}>
+            <NavItem style={{ listStyleType: "none" }}>
               <PlayerSearch />
-            </NavItem> */}
+            </NavItem>
 
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>

@@ -35,7 +35,7 @@ function SharedStats(props) {
                           textDecoration: "none",
                           color: "Crimson",
                         }}
-                        to={`/user/${userId}`}
+                        to={`/user/${userName}`}
                       >
                         {userName}
                       </Link>{" "}

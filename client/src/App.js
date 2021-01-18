@@ -28,13 +28,8 @@ const App = () => {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/myprofile" exact component={MyTournaments} />
-            <Route path="/user/:userId" component={UserProfile} />
-            {/* <Route path="/:userId" children={UserProfile} /> */}
+            <Route path="/user/:userName" component={UserProfile} />
           </Switch>
-          <Container>
-            {/* <TournamentModal />
-            <TournamentList /> */}
-          </Container>
         </div>
       </Router>
     </Provider>

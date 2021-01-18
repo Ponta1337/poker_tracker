@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import UserStats from "./UserStats";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Spinner } from "reactstrap";
 import { getUserStats } from "../../actions/userStatsActions";
 
 function MyTournaments(props) {
@@ -14,7 +14,7 @@ function MyTournaments(props) {
 
   useEffect(() => {
     if (isAuthenticated) {
-      getUserStats(props.auth.user._id);
+      getUserStats(props.auth.user.name);
     }
   }, [isAuthenticated, tournaments]);
 
@@ -23,17 +23,24 @@ function MyTournaments(props) {
       {!props.isAuthenticated &&
       !props.tournament.tournamentsByUserIdisLoaded &&
       !props.tournament.loading ? (
-        <div>
-          <p>Loading.....</p>
-        </div>
+        <Spinner
+          size="lg"
+          animation="grow"
+          color="dark"
+          style={{ justifyContent: "center" }}
+        />
       ) : (
         <Container>
           <Row>
-            <Col sm={5}>
-              {/* <TestFuncAsProps /> */}
-              <UserStats />
-              <UserStatsChart />
-            </Col>
+            {props.tournament.tournaments.length === 0 ? (
+              <h3>Add your first tournmanet!</h3>
+            ) : (
+              <Col sm={5}>
+                <UserStats />
+                <UserStatsChart />
+              </Col>
+            )}
+
             <Col sm={7}>
               <TournamentListFunc />
             </Col>
@@ -48,6 +55,7 @@ const mapStateToProps = (state) => ({
   tournament: state.tournament,
   isAuthenticated: state.auth.isAuthenticated,
   auth: state.auth,
+  userSats: state.userSats,
 });
 
 export default connect(mapStateToProps, { getUserStats })(MyTournaments);

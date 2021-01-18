@@ -1,67 +1,88 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { connect } from "react-redux";
+import { Container, Spinner } from "reactstrap";
 
 function UserStatsChart(props) {
   const [chartData, setChartData] = useState({});
-  const [cashesData, setCashesData] = useState([]);
   const { tournaments } = props.tournament;
 
-  const numArr = Array.from({ length: tournaments.length }, (_, i) => i + 1);
+  const numArr = Array.from({ length: tournaments.length + 1 }, (_, i) => i);
 
   const cashedForArr = tournaments.map(
     ({ cashedFor, buyInCost }) => cashedFor - buyInCost
   );
-  const reversedCashedForArr = cashedForArr.reverse();
+  cashedForArr.push(0);
+  cashedForArr.reverse();
 
-  const test = [];
+  const cashesArr = [];
 
-  const jahapp = () => {
+  const getCashes = () => {
     let ny = 0;
     for (let i = 0; i < cashedForArr.length; i++) {
       ny = ny += cashedForArr[i];
-      test.push(ny);
+      cashesArr.push(ny);
     }
-    setCashesData(test);
-    return test;
+    console.log(cashesArr);
+    return cashesArr;
   };
 
   const chart = () => {
     setChartData({
       labels: numArr,
-      // labels: numberOfTournamentsPlayed,
+
       datasets: [
         {
           label: "Profit History",
-          data: test,
-          //   backgroundColor: ["green"],
+          fill: false,
+          lineTension: 0.5,
+          // backgroundColor: "rgba(75,192,192,1)",
+          // borderColor: "rgba(0,0,0,1)",
+          data: cashesArr,
+
+          //backgroundColor: ["green"],
           borderWidth: 4,
         },
       ],
     });
   };
 
-  // 2+ 1
-  //
-
   //const foreachArr = array.forEach((t) => t);
   useEffect(() => {
     chart();
-    jahapp();
+    getCashes();
   }, [tournaments]);
   return (
-    <div style={{ height: "500px", width: "500px", marginTop: "40px" }}>
-      <Line
-        data={chartData}
-        options={{
-          responsive: true,
-        }}
-      />
-    </div>
+    <Container>
+      {props.userStats.loading ? (
+        <Spinner
+          size="lg"
+          animation="grow"
+          color="dark"
+          style={{ justifyContent: "center" }}
+        />
+      ) : (
+        <div
+          style={{
+            height: "250px",
+            width: "500px",
+            marginTop: "40px",
+            backgroundColor: "white",
+          }}
+        >
+          <Line
+            data={chartData}
+            options={{
+              responsive: true,
+            }}
+          />
+          {console.log(cashedForArr)}
+          {console.log(cashesArr)}
+        </div>
+      )}
+    </Container>
   );
 }
-
-// export default UserStatsChart;
 
 const mapStateToProps = (state) => {
   return {
@@ -69,6 +90,7 @@ const mapStateToProps = (state) => {
     isAuthenticated: state.auth.isAuthenticated,
     auth: state.auth,
     currentUser: state.auth.user,
+    userStats: state.userStats,
   };
 };
 

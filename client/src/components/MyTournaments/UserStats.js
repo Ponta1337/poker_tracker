@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { ListGroup, ListGroupItem, Card, CardText } from "reactstrap";
+import { ListGroup, ListGroupItem, Card, CardText, Spinner } from "reactstrap";
 import { getUserStats } from "../../actions/userStatsActions";
 
 function UserStats(props) {
@@ -7,30 +7,41 @@ function UserStats(props) {
 
   return (
     <div>
-      <Card className="text-center" style={{ width: "18rem" }}>
-        {stats.map(
-          ({
-            totalEarnings,
-            cashedForSum,
-            buyInCostSum,
-            biggestCash,
-            ROI,
-            avgBuyIn,
-          }) => (
-            <ListGroup variant="flush">
-              <ListGroupItem>
-                <CardText>Total Earnings</CardText> {totalEarnings}
-              </ListGroupItem>
-              <ListGroupItem>Total buyins: ${buyInCostSum}</ListGroupItem>
-              <ListGroupItem>Total cashes: ${cashedForSum}</ListGroupItem>
-              {/* <ListGroupItem>Tournaments played: TBA</ListGroupItem> */}
-              <ListGroupItem>Avg Buyin: ${Math.round(avgBuyIn)}</ListGroupItem>
-              <ListGroupItem>Biggest Cash: ${biggestCash}</ListGroupItem>
-              <ListGroupItem>ROI: {Math.round(ROI)}%</ListGroupItem>
-            </ListGroup>
-          )
-        )}
-      </Card>
+      {!props.userStats.loading ? (
+        <Card className="text-center" style={{ width: "18rem" }}>
+          {stats.map(
+            ({
+              totalEarnings,
+              cashedForSum,
+              buyInCostSum,
+              biggestCash,
+              ROI,
+              avgBuyIn,
+            }) => (
+              <ListGroup variant="flush">
+                <ListGroupItem>
+                  <CardText>Total Earnings</CardText> {totalEarnings}
+                </ListGroupItem>
+                <ListGroupItem>Total buyins: ${buyInCostSum}</ListGroupItem>
+                <ListGroupItem>Total cashes: ${cashedForSum}</ListGroupItem>
+                {/* <ListGroupItem>Tournaments played: TBA</ListGroupItem> */}
+                <ListGroupItem>
+                  Avg Buyin: ${Math.round(avgBuyIn)}
+                </ListGroupItem>
+                <ListGroupItem>Biggest Cash: ${biggestCash}</ListGroupItem>
+                <ListGroupItem>ROI: {Math.round(ROI)}%</ListGroupItem>
+              </ListGroup>
+            )
+          )}
+        </Card>
+      ) : (
+        <Spinner
+          size="lg"
+          animation="grow"
+          color="dark"
+          style={{ justifyContent: "center" }}
+        />
+      )}
     </div>
   );
 }

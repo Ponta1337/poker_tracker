@@ -16,7 +16,6 @@ import { getLeaderBoardStats } from "../actions/userStatsActions";
 function LeaderBoardList(props) {
   const { stats } = props.userStats;
   const { getLeaderBoardStats } = props;
-  const [rankingIncrement, setRankingIncrement] = useState(3);
 
   useEffect(() => {
     getLeaderBoardStats();
@@ -38,7 +37,7 @@ function LeaderBoardList(props) {
                   <Col sm={4}>
                     <Link
                       style={{ color: "Crimson" }}
-                      to={`/user/${_id.userId}`}
+                      to={`/user/${_id.userName}`}
                     >
                       {_id.userName}
                     </Link>

@@ -38,20 +38,13 @@ function PlayerSearch(props) {
 
   const onChange = (e) => {
     SetSearchPlayer(e.target.value);
-    //console.log(searchPlayer);
-    // props.getUsers();
   };
 
   const onSubmitName = (e) => {
     e.preventDefault();
-    // props.users.forEach((user) => {
-    //   if (user.name === searchPlayer) {
-    //     setId(user._id);
-    //     setUserMatch(true);
-    //   }
-    // });
-    setNameSubmited(true);
+
     props.history.push(`/user/${searchPlayer}`);
+    SetSearchPlayer("");
   };
 
   return (

@@ -56,9 +56,42 @@ router.get("/biggestcash/:userId", (req, res) => {
 //   ]).then((tournaments) => res.json(tournaments));
 // });
 
-router.get("/allstats/:userId", (req, res) => {
+//Get stats by userId
+// router.get("/allstats/:userId", (req, res) => {
+//   Tournament.aggregate([
+//     { $match: { userId: req.params.userId } },
+//     {
+//       $group: {
+//         _id: "$userId",
+//         buyInCostSum: { $sum: "$buyInCost" },
+//         cashedForSum: { $sum: "$cashedFor" },
+//         biggestCash: { $max: "$cashedFor" },
+//         avgBuyIn: { $avg: "$buyInCost" },
+//       },
+//     },
+//     {
+//       $addFields: {
+//         totalEarnings: { $subtract: ["$cashedForSum", "$buyInCostSum"] },
+//         ROI: {
+//           $multiply: [
+//             {
+//               $divide: [
+//                 { $subtract: ["$cashedForSum", "$buyInCostSum"] },
+//                 "$buyInCostSum",
+//               ],
+//             },
+//             100,
+//           ],
+//         },
+//       },
+//     },
+//   ]).then((tournaments) => res.json(tournaments));
+// });
+
+//Get all stats by userName
+router.get("/allstats/:userName", (req, res) => {
   Tournament.aggregate([
-    { $match: { userId: req.params.userId } },
+    { $match: { userName: req.params.userName } },
     {
       $group: {
         _id: "$userId",
