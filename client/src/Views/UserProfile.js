@@ -1,16 +1,16 @@
-import UserStatsChart from "../MyTournaments/UserStatsChart";
+import UserStatsChart from "../components/Stats/UserStatsChart";
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 
-import UserStats from "../MyTournaments/UserStats";
+import UserStats from "../components/Stats/UserStats";
 
 import { BrowserRouter as Router, useParams } from "react-router-dom";
 
 import { Container, Row, Col, Spinner } from "reactstrap";
-import { getUserStats, getPlayerByName } from "../../actions/userStatsActions";
-import UserTournamentsList from "../UserTournamentsList";
+import { getUserStats, getPlayerByName } from "../actions/userStatsActions";
+import UserTournamentsList from "../components/UserTournamentsList";
 
 function UserProfile(props) {
   const { getPlayerByName } = props;

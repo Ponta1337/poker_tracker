@@ -1,11 +1,11 @@
-import UserStatsChart from "./UserStatsChart";
+import UserStatsChart from "../components/Stats/UserStatsChart";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import UserStats from "./UserStats";
+import UserStats from "../components/Stats/UserStats";
 import { Container, Row, Col, Spinner } from "reactstrap";
-import { getUserStats } from "../../actions/userStatsActions";
-import ProfileTournamentList from "../ProfileTournamentList";
+import { getUserStats } from "../actions/userStatsActions";
+import ProfileTournamentList from "../components/ProfileTournamentList";
 
 function MyTournaments(props) {
   const { isAuthenticated } = props;

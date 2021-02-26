@@ -72,7 +72,6 @@ function TournamentUpdateModal(props) {
         className="edit-btn"
         color="primary"
         size="sm"
-        // onClick={onClickEditTournament.bind(this, tournament)}
         onClick={onClickEditTournamentTest}
       >
         edit

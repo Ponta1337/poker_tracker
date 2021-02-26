@@ -23,31 +23,24 @@ function UserStatsChart(props) {
       ny = ny += cashedForArr[i];
       cashesArr.push(ny);
     }
-    console.log(cashesArr);
     return cashesArr;
   };
 
   const chart = () => {
     setChartData({
       labels: numArr,
-
       datasets: [
         {
           label: "Profit History",
           fill: false,
           lineTension: 0.5,
-          // backgroundColor: "rgba(75,192,192,1)",
-          // borderColor: "rgba(0,0,0,1)",
           data: cashesArr,
-
-          //backgroundColor: ["green"],
           borderWidth: 4,
         },
       ],
     });
   };
 
-  //const foreachArr = array.forEach((t) => t);
   useEffect(() => {
     chart();
     getCashes();

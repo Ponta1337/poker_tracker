@@ -1,9 +1,9 @@
 import React from "react";
-import LeaderBoardList from "../LeaderBoardList";
+import LeaderBoardList from "../components/LeaderBoardList";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "reactstrap";
-import PublicTournamentHistory from "../PublicTournamentHistory";
+import PublicTournamentHistory from "../components/PublicTournamentHistory";
 
 const Home = () => {
   return (

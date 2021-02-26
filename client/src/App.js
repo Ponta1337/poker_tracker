@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import AppNavBar from "./components/AppNavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import MyTournaments from "./components/MyTournaments/MyTournaments";
-import Home from "./components/Home/Home";
-import UserProfile from "./components/UserProfile/UserProfile";
+import AuthProfile from "./Views/AuthProfile";
+import Home from "./Views/Home";
+import UserProfile from "./Views/UserProfile";
 import NoMatch from "./components/NoMatch";
 
 import { Container } from "reactstrap";
@@ -28,7 +28,7 @@ const App = () => {
 
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/profile/:userName" exact component={MyTournaments} />
+            <Route path="/profile/:userName" exact component={AuthProfile} />
             <Route path="/user/:userName" component={UserProfile} />
             <Route path="*">
               {" "}

@@ -6,11 +6,6 @@ import { getUserStats } from "../../actions/userStatsActions";
 function UserStats(props) {
   const { stats } = props.userStats;
 
-  // useEffect(() => {
-  //   props.getUserStats(props.userId);
-  //   console.log("userid..." + props.userId);
-  // }, []);
-
   return (
     <div>
       {!props.userStats.loading ? (

@@ -15,7 +15,6 @@ function PublicTournamentHistory(props) {
 
   useEffect(() => {
     getTournaments();
-    // props.getUsers();
   }, []);
 
   const { tournaments } = props.tournament;
