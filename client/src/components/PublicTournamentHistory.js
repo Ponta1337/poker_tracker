@@ -10,7 +10,7 @@ import moment from "moment";
 import ordinal from "ordinal";
 import { getUsers } from "../actions/userActions";
 
-function SharedStats(props) {
+function PublicTournamentHistory(props) {
   const { getTournaments } = props;
 
   useEffect(() => {
@@ -27,6 +27,7 @@ function SharedStats(props) {
           <TransitionGroup className="tournament-list">
             {tournaments.map(
               ({ _id, name, placement, cashedFor, userName, date, userId }) => (
+                // (cashedFor > 0 ? : null)
                 <CSSTransition key={_id} timeout={500} classNames="fade">
                   <ListGroupItem>
                     <div>
@@ -74,4 +75,4 @@ export default connect(mapStateToProps, {
   getTournaments,
   getTournamentsByUserId,
   getUsers,
-})(SharedStats);
+})(PublicTournamentHistory);

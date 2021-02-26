@@ -21,17 +21,17 @@ router.get("/", (req, res) => {
 //@desc  Get tournament by userId
 //@access Public
 
-// router.get("/:userId", (req, res) => {
-//   Tournament.find({ userId: req.params.userId })
-//     .sort({ date: -1 })
-//     .then((tournaments) => res.json(tournaments));
-// });
-
-router.get("/:userName", (req, res) => {
-  Tournament.find({ userName: req.params.userName })
+router.get("/:userId", (req, res) => {
+  Tournament.find({ userId: req.params.userId })
     .sort({ date: -1 })
     .then((tournaments) => res.json(tournaments));
 });
+
+// router.get("/:userName", (req, res) => {
+//   Tournament.find({ userName: req.params.userName })
+//     .sort({ date: -1 })
+//     .then((tournaments) => res.json(tournaments));
+// });
 
 //@route PUT api/tournaments
 //@desc  Edits an item

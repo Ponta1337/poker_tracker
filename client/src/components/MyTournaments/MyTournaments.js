@@ -1,4 +1,3 @@
-import TournamentListFunc from "../TournamentListFunc";
 import UserStatsChart from "./UserStatsChart";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
@@ -6,6 +5,7 @@ import { connect } from "react-redux";
 import UserStats from "./UserStats";
 import { Container, Row, Col, Spinner } from "reactstrap";
 import { getUserStats } from "../../actions/userStatsActions";
+import ProfileTournamentList from "../ProfileTournamentList";
 
 function MyTournaments(props) {
   const { isAuthenticated } = props;
@@ -14,7 +14,7 @@ function MyTournaments(props) {
 
   useEffect(() => {
     if (isAuthenticated) {
-      getUserStats(props.auth.user.name);
+      getUserStats(props.auth.user._id);
     }
   }, [isAuthenticated, tournaments]);
 
@@ -42,7 +42,7 @@ function MyTournaments(props) {
             )}
 
             <Col sm={7}>
-              <TournamentListFunc />
+              <ProfileTournamentList />
             </Col>
           </Row>
         </Container>

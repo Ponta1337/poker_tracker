@@ -70,11 +70,11 @@ function TournamentModalFunc(props) {
       ) : null}
 
       <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Tournament name</ModalHeader>
+        <ModalHeader toggle={toggle}>Add a played tournament</ModalHeader>
         <ModalBody>
           <Form onSubmit={onSubmit}>
             <FormGroup>
-              <Label for="tournament">Name of tournament</Label>
+              <Label for="tournament">Tournament</Label>
               <Input
                 required="true"
                 type="text"

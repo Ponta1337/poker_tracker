@@ -88,10 +88,32 @@ router.get("/biggestcash/:userId", (req, res) => {
 //   ]).then((tournaments) => res.json(tournaments));
 // });
 
-//Get all stats by userName
-router.get("/allstats/:userName", (req, res) => {
+// "/^" + req.params.userName + "/"
+router.get("/allstatss/:userName", (req, res) => {
+  var userNameParams = req.params.userName;
+  Tournament.find({
+    userName: new RegExp("^" + userNameParams + "$", "i"),
+  }).then((tournaments) => res.json(tournaments));
+});
+//`/api/tournaments/${userId}`;
+
+router.get("/id/:userName", (req, res) => {
+  var hej = req.params.userName;
   Tournament.aggregate([
-    { $match: { userName: req.params.userName } },
+    { $match: { userName: new RegExp("^" + hej + "$", "i") } },
+    {
+      $group: {
+        _id: "$userId",
+      },
+    },
+  ]).then((tournaments) => res.json(tournaments));
+});
+
+//Get all stats by userId
+router.get("/allstats/:userId", (req, res) => {
+  Tournament.aggregate([
+    // { $match: { userName: new RegExp("^" + hej + "$", "i") } },
+    { $match: { userId: req.params.userId } },
     {
       $group: {
         _id: "$userId",

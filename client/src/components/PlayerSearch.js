@@ -1,40 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Form, Input, Alert } from "reactstrap";
+import { Form, Input } from "reactstrap";
 import { getPlayerByName } from "../actions/userStatsActions";
 import { getUsers } from "../actions/userActions";
 
-import { Link, Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 function PlayerSearch(props) {
-  const { userSearch } = props.userStats;
   const [searchPlayer, SetSearchPlayer] = useState("");
-  const [userMatch, setUserMatch] = useState(false);
-  const [nameToSubmit, setNameToSubmit] = useState("");
-  const [id, setId] = useState(null);
-  const [nameSubmited, setNameSubmited] = useState(false);
-
-  useEffect(() => {}, []);
-  // setTimeout(() => {
-  //   props.history.push("/mytournaments");
-  // }, 10000);
-  // {tournaments.map(
-  //   ({ _id, name, placement, cashedFor, userName, date, userId }) => (
-  const goToUserProfile = () => {
-    // props.users.map(({ name }) => {
-    //   if (searchPlayer === name) {
-    //     console.log("samma");
-    //   } else {
-    //     console.log("inte samma");
-    //   }
-    // });
-    //if (!userMatch) alert("User doesn't exist =(");
-    // if (searchPlayer === props.users) {
-    //   console.log("input = state");
-    // } else {
-    //   console.log("inout != state.... :(");
-    // }
-  };
 
   const onChange = (e) => {
     SetSearchPlayer(e.target.value);
@@ -56,7 +29,7 @@ function PlayerSearch(props) {
           type="search"
           name="search"
           id="exampleSearch"
-          placeholder="Search for player"
+          placeholder="Search for user"
           onChange={onChange}
           value={searchPlayer}
         />

@@ -24,7 +24,7 @@ function LeaderBoardList(props) {
   return (
     <Fragment>
       {!props.userStats.loading ? (
-        <Card className="text-left" style={{ width: "24rem", padding: 10 }}>
+        <Card className="text-left" style={{ width: "25rem", padding: 10 }}>
           <CardTitle style={{ textAlign: "center" }}>TOP EARNINGS</CardTitle>
           <ListGroup variant="flush">
             {stats.map(({ _id, totalEarnings }, index) => (
@@ -33,7 +33,7 @@ function LeaderBoardList(props) {
                 style={{ borderRight: "none", borderLeft: "none" }}
               >
                 <Row>
-                  <Col sm={1}>{index + 1}</Col>
+                  <Col sm={2}>{index + 1}</Col>
                   <Col sm={4}>
                     <Link
                       style={{ color: "Crimson" }}

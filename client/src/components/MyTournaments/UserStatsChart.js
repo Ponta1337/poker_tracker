@@ -53,7 +53,7 @@ function UserStatsChart(props) {
     getCashes();
   }, [tournaments]);
   return (
-    <Container>
+    <Container style={{ paddingLeft: 0 }}>
       {props.userStats.loading ? (
         <Spinner
           size="lg"
@@ -66,7 +66,7 @@ function UserStatsChart(props) {
           style={{
             height: "250px",
             width: "500px",
-            marginTop: "40px",
+            marginTop: "20px",
             backgroundColor: "white",
           }}
         >
@@ -76,8 +76,6 @@ function UserStatsChart(props) {
               responsive: true,
             }}
           />
-          {console.log(cashedForArr)}
-          {console.log(cashesArr)}
         </div>
       )}
     </Container>

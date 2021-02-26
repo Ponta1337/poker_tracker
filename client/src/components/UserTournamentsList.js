@@ -5,16 +5,16 @@ import { Container, Table, Row, Spinner } from "reactstrap";
 import { connect } from "react-redux";
 import {
   deleteTournament,
-  getTournamentsByUserName,
+  getTournamentsByUserId,
 } from "../actions/tournamentActions";
 
 function UserTournamentsList(props) {
   const { tournaments } = props.tournament;
-  const { getTournamentsByUserName } = props;
+  const { getTournamentsByUserId } = props;
 
   useEffect(() => {
-    getTournamentsByUserName(props.name);
-  }, [props.name]);
+    getTournamentsByUserId(props.userId);
+  }, []);
 
   const renderTournament = (tournament, index) => {
     return (
@@ -60,18 +60,18 @@ function UserTournamentsList(props) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const name = ownProps.uName;
+  const uId = ownProps.pUserId;
 
   return {
     tournament: state.tournament,
     isAuthenticated: state.auth.isAuthenticated,
     auth: state.auth,
     currentUser: state.auth.user,
-    name: name,
+    userId: uId,
   };
 };
 
 export default connect(mapStateToProps, {
-  getTournamentsByUserName,
+  getTournamentsByUserId,
   deleteTournament,
 })(UserTournamentsList);

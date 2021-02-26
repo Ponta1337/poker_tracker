@@ -33,7 +33,6 @@ class AppNavBar extends Component {
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
-
     const authLinks = (
       <Fragment>
         <NavItem>
@@ -43,7 +42,10 @@ class AppNavBar extends Component {
         </NavItem>
 
         <NavItem>
-          <Link to="/myprofile" className={"nav-link"}>
+          <Link
+            to={`/profile/${user ? user.name : null}`}
+            className={"nav-link"}
+          >
             My Profile
           </Link>
         </NavItem>

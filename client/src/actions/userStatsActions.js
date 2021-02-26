@@ -18,9 +18,9 @@ import { returnErrors } from "./errorActions";
 //   });
 // };
 
-export const getUserStats = (userName) => (dispatch) => {
+export const getUserStats = (userId) => (dispatch) => {
   dispatch(setStatsLoading());
-  axios.get(`/api/stats/allstats/${userName}`).then((res) => {
+  axios.get(`/api/stats/allstats/${userId}`).then((res) => {
     dispatch({
       type: GET_USER_STATS,
       payload: res.data,
@@ -40,7 +40,7 @@ export const getLeaderBoardStats = () => (dispatch) => {
 
 export const getPlayerByName = (name) => (dispatch) => {
   dispatch(setSearchLoading());
-  axios.get(`/api/users/${name}/`).then((res) => {
+  axios.get(`/api/stats/id/${name}/`).then((res) => {
     dispatch({
       type: GET_USER_BY_NAME,
       payload: res.data,

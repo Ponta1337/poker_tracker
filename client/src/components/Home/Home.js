@@ -1,10 +1,9 @@
 import React from "react";
-import SharedStats from "../SharedStats";
 import LeaderBoardList from "../LeaderBoardList";
-import PlayerSearchTest from "../PlayerSearchTest";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "reactstrap";
+import PublicTournamentHistory from "../PublicTournamentHistory";
 
 const Home = () => {
   return (
@@ -15,7 +14,7 @@ const Home = () => {
           <LeaderBoardList />
         </Col>
         <Col sm={6}>
-          <SharedStats />
+          <PublicTournamentHistory />
         </Col>
       </Row>
     </Container>

@@ -1,45 +1,47 @@
-// import TournamentModal from "../TournamentModal";
-
 import UserStatsChart from "../MyTournaments/UserStatsChart";
-// import UserStatsChart from "./UserStatsChart";
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 
 import UserStats from "../MyTournaments/UserStats";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter as Router, useParams } from "react-router-dom";
 
 import { Container, Row, Col, Spinner } from "reactstrap";
 import { getUserStats, getPlayerByName } from "../../actions/userStatsActions";
 import UserTournamentsList from "../UserTournamentsList";
 
 function UserProfile(props) {
-  const [searchUserId, setSearchUserId] = useState("");
-  const [isLoaded, setIsLoaded] = useState(false);
+  const { getPlayerByName } = props;
+  const { getUserStats } = props;
 
   useEffect(() => {
-    props.getUserStats(userName);
+    getPlayerByName(userName);
   }, [useParams()]);
 
-  let { userName } = useParams();
+  useEffect(() => {
+    if (userIdd.length !== 0) {
+      getUserStats(userIdd);
+    }
+  }, [props.userStats.userSearch]);
 
-  const uId = props.userStats.stats.map(({ _id }) => _id);
+  let { userName } = useParams();
+  const userIdd = props.userStats.userSearch.map(({ _id }) => _id);
 
   return (
     <div className="MyTournaments">
-      {props.userStats.loading ? null : uId.length === 0 ? (
+      {props.userStats.searchLoading ? null : userIdd.length === 0 ? (
         <div
           style={{ textAlign: "center" }}
         >{`User "${userName}" doesn't exist =(`}</div>
       ) : (
         <Container>
+          <Row>
+            <Col>
+              <h2 style={{ textAlign: "center" }}>{userName}</h2>
+            </Col>
+          </Row>
           <h3 style={{ textAlign: "center" }}></h3>
           <Row>
             <Col>
@@ -47,7 +49,7 @@ function UserProfile(props) {
               <UserStatsChart />
             </Col>
             <Col>
-              <UserTournamentsList uName={userName} />
+              <UserTournamentsList pUserId={userIdd} />
             </Col>
           </Row>
         </Container>

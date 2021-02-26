@@ -10,7 +10,7 @@ const initialState = {
   loading: false,
   numberOfPlyaedTournaments: null,
   stats: [],
-  userSearch: "",
+  userSearch: [],
   searchLoading: false,
 };
 

@@ -103,9 +103,3 @@ export const setTournamentsLoading = () => {
     type: TOURNAMENTS_LOADING,
   };
 };
-
-// export const setUserStats = () => {
-//   return {
-//     type: USER_STATS,
-//   };
-// };

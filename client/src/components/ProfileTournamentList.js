@@ -10,9 +10,9 @@ import {
 } from "../actions/tournamentActions";
 
 import TournamentUpdateModal from "./TournamentUpdateModal";
-import TournamentModalFunc from "./TournamentModalFunc";
 
 import TournamentDeleteModal from "./TournamentDeleteModal";
+import TournamentAddModal from "./TournamentAddModal";
 
 function TournamentListFunc(props) {
   const { getTournamentsByUserId } = props;
@@ -21,8 +21,8 @@ function TournamentListFunc(props) {
 
   useEffect(() => {
     if (props.isAuthenticated) {
-      // getTournamentsByUserId(props.currentUser._id);
-      getTournamentsByUserName(props.currentUser.name);
+      getTournamentsByUserId(props.currentUser._id);
+      //getTournamentsByUserName(props.currentUser.name);
     }
   }, []);
 
@@ -45,12 +45,12 @@ function TournamentListFunc(props) {
   };
 
   return (
-    <Container>
+    <Container style={{ marginLeft: 60 }}>
       {!props.tournament.loading ? (
         <Row>
           <Col>
             <ButtonGroup aria-label="handle-tournaments">
-              <TournamentModalFunc />
+              <TournamentAddModal />
             </ButtonGroup>
 
             {
@@ -64,6 +64,7 @@ function TournamentListFunc(props) {
                       <th>Cash</th>
                       <th>Placement</th>
                       <th>Date</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>{tournaments.map(renderTournament)}</tbody>
