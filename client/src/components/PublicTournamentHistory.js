@@ -1,7 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import dateFormat from "dateformat";
-import { Container, ListGroup, ListGroupItem, Spinner } from "reactstrap";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import "./PublicTournamentHistory.css";
+import {
+  Container,
+  ListGroup,
+  ListGroupItem,
+  Spinner,
+  Button,
+} from "reactstrap";
 import { connect } from "react-redux";
 import { getTournaments } from "../actions/tournamentActions";
 import { getTournamentsByUserId } from "../actions/tournamentActions";
@@ -12,51 +18,72 @@ import { getUsers } from "../actions/userActions";
 
 function PublicTournamentHistory(props) {
   const { getTournaments } = props;
+  const [page, setPage] = useState(1);
+  const { tournaments } = props.tournament;
+  const [isLoaded, SetIsLoaded] = useState(false);
 
   useEffect(() => {
     getTournaments();
   }, []);
 
-  const { tournaments } = props.tournament;
+  const handleClick = () => {
+    setPage(page + 1);
+    SetIsLoaded(true);
+  };
 
   return (
-    <Container>
+    <Container style={{ padding: 0 }}>
+      <h5 className="red-header">Tournament History</h5>
       {!props.tournament.loading ? (
-        <ListGroup>
-          <TransitionGroup className="tournament-list">
-            {tournaments.map(
-              ({ _id, name, placement, cashedFor, userName, date, userId }) => (
-                // (cashedFor > 0 ? : null)
-                <CSSTransition key={_id} timeout={500} classNames="fade">
-                  <ListGroupItem>
-                    <div>
-                      <Link
-                        style={{
-                          textDecoration: "none",
-                          color: "Crimson",
-                        }}
-                        to={`/user/${userName}`}
-                      >
-                        {userName}
-                      </Link>{" "}
-                      - <small>{moment(date).fromNow()}</small>
-                    </div>
-                    {` Won $${cashedFor} for ${ordinal(
-                      placement
-                    )} place in ${name} on ${dateFormat(date, "yyyy/m/d")}`}
-                  </ListGroupItem>
-                </CSSTransition>
-              )
-            )}
-          </TransitionGroup>
+        <ListGroup className="tournament-lg">
+          {/* <TransitionGroup className="tournament-list"> */}
+
+          {tournaments
+            .slice(0, 8 * page)
+            .map(({ _id, name, placement, cashedFor, userName, date }) => (
+              // (cashedFor > 0 ? : null)
+              // <CSSTransition key={_id} timeout={500} classNames="fade">
+              <ListGroupItem className="history-items" key={_id}>
+                <div>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "#b22022",
+                    }}
+                    to={`/user/${userName}`}
+                  >
+                    {userName}
+                  </Link>{" "}
+                  - <small>{moment(date).fromNow()}</small>
+                </div>
+                {` Won $${cashedFor} for ${ordinal(
+                  placement
+                )} place in ${name} on ${dateFormat(date, "yyyy/m/d")}`}
+              </ListGroupItem>
+              // </CSSTransition>
+            ))}
+          {/* </TransitionGroup> */}
         </ListGroup>
       ) : (
-        <Spinner
-          size="lg"
-          animation="grow"
+        !isLoaded && (
+          <Spinner
+            size="lg"
+            animation="grow"
+            color="dark"
+            style={{ justifyContent: "center" }}
+          />
+        )
+      )}
+      {tournaments.length < page * 8 ? null : (
+        <Button
+          // style={{ color: "black", backgroundColor: "white", border: "none" }}
+          //className="btn-dark"
+          block
           color="dark"
-          style={{ justifyContent: "center" }}
-        />
+          onClick={handleClick}
+        >
+          Load More...
+        </Button>
       )}
     </Container>
   );

@@ -1,0 +1,7 @@
+.about-container {
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  align-items: center;
+}

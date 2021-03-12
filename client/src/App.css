@@ -22,3 +22,16 @@
 body {
   background-color: rgb(233, 233, 233);
 }
+
+.red-header {
+  text-align: center;
+  color: whitesmoke;
+  background: linear-gradient(
+    180deg,
+    rgba(188, 32, 41, 1) 0%,
+    rgba(149, 31, 36, 1) 100%
+  );
+  font-size: 30px;
+  margin-bottom: 0;
+  padding: 3px;
+}

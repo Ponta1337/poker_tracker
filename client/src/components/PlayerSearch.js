@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Form, Input } from "reactstrap";
+import { Form, Input, InputGroup } from "reactstrap";
 import { getPlayerByName } from "../actions/userStatsActions";
 import { getUsers } from "../actions/userActions";
 
@@ -15,24 +15,37 @@ function PlayerSearch(props) {
 
   const onSubmitName = (e) => {
     e.preventDefault();
-
-    props.history.push(`/user/${searchPlayer}`);
-    SetSearchPlayer("");
+    if (searchPlayer !== "") {
+      props.history.push(`/user/${searchPlayer}`);
+      SetSearchPlayer("");
+    }
   };
 
   return (
     <div>
-      {/* {userMatch && nameSubmited ? <Redirect to={`/user/${id}/`} /> : null} */}
       <Form onSubmit={onSubmitName}>
-        <Input
-          // onSubmit={onSubmit}
-          type="search"
-          name="search"
-          id="exampleSearch"
-          placeholder="Search for user"
-          onChange={onChange}
-          value={searchPlayer}
-        />
+        <InputGroup onSubmit={onSubmitName}>
+          {/* {userMatch && nameSubmited ? <Redirect to={`/user/${id}/`} /> : null} */}
+          {/* <Form onSubmit={onSubmitName}> */}
+          <Input
+            // onSubmit={onSubmitName}
+            type="search"
+            name="search"
+            id="exampleSearch"
+            placeholder="Search for user"
+            onChange={onChange}
+            value={searchPlayer}
+            required
+          />
+          <button
+            onClick={onSubmitName}
+            type="button"
+            className="btn btn-primary"
+          >
+            <i className="fas fa-search"></i>
+          </button>
+          {/* </Form> */}
+        </InputGroup>
       </Form>
     </div>
   );

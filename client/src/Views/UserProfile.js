@@ -9,20 +9,28 @@ import UserStats from "../components/Stats/UserStats";
 import { BrowserRouter as Router, useParams } from "react-router-dom";
 
 import { Container, Row, Col, Spinner } from "reactstrap";
-import { getUserStats, getPlayerByName } from "../actions/userStatsActions";
+import {
+  getUserStats,
+  getPlayerByName,
+  getDates,
+  updateLastVisited,
+} from "../actions/userStatsActions";
 import UserTournamentsList from "../components/UserTournamentsList";
+import UserBanner from "../components/UserBanner";
 
 function UserProfile(props) {
-  const { getPlayerByName } = props;
-  const { getUserStats } = props;
+  const { getPlayerByName, getUserStats, getDates, updateLastVisited } = props;
 
   useEffect(() => {
     getPlayerByName(userName);
+    updateLastVisited(userIdd);
   }, [useParams()]);
 
   useEffect(() => {
     if (userIdd.length !== 0) {
       getUserStats(userIdd);
+      getDates(userIdd);
+      // updateLastVisited(userIdd);
     }
   }, [props.userStats.userSearch]);
 
@@ -30,25 +38,26 @@ function UserProfile(props) {
   const userIdd = props.userStats.userSearch.map(({ _id }) => _id);
 
   return (
-    <div className="MyTournaments">
+    <div>
+      <UserBanner />
       {props.userStats.searchLoading ? null : userIdd.length === 0 ? (
         <div
           style={{ textAlign: "center" }}
         >{`User "${userName}" doesn't exist =(`}</div>
       ) : (
         <Container>
+          {/* <Row>
+            <Col> */}
+
+          {/* </Col>
+          </Row> */}
+
           <Row>
-            <Col>
-              <h2 style={{ textAlign: "center" }}>{userName}</h2>
-            </Col>
-          </Row>
-          <h3 style={{ textAlign: "center" }}></h3>
-          <Row>
-            <Col>
+            <Col sm={6}>
               <UserStats />
               <UserStatsChart />
             </Col>
-            <Col>
+            <Col sm={6}>
               <UserTournamentsList pUserId={userIdd} />
             </Col>
           </Row>
@@ -67,6 +76,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { getUserStats, getPlayerByName })(
-  UserProfile
-);
+export default connect(mapStateToProps, {
+  getUserStats,
+  getPlayerByName,
+  getDates,
+  updateLastVisited,
+})(UserProfile);

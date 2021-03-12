@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { register } from "../../actions/authActions";
 import { clearErrors } from "../../actions/errorActions";
+import "./RegisterModal.css";
 
 class RegisterModal extends Component {
   state = {
@@ -22,6 +23,7 @@ class RegisterModal extends Component {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
     msg: null,
   };
 
@@ -65,7 +67,7 @@ class RegisterModal extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const { email, name, password } = this.state;
+    const { email, name, password, confirmPassword } = this.state;
 
     //Create user object
     const newUser = {
@@ -73,15 +75,18 @@ class RegisterModal extends Component {
       email,
       password,
     };
-
     //Attempt to register
-    this.props.register(newUser);
+    if (confirmPassword === password) {
+      this.props.register(newUser);
+    } else {
+      this.setState({ msg: "Password doesn't match" });
+    }
   };
 
   render() {
     return (
       <div>
-        <NavLink onClick={this.toggle} href="#">
+        <NavLink className="register-link" onClick={this.toggle} href="#">
           Register
         </NavLink>
 
@@ -119,6 +124,15 @@ class RegisterModal extends Component {
                   name="password"
                   id="password"
                   placeholder="Password"
+                  className="mb-3"
+                  onChange={this.onChange}
+                />
+                <Label for="confirmPassword">Confirm Password</Label>
+                <Input
+                  type="password"
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  placeholder="Confirm password"
                   className="mb-3"
                   onChange={this.onChange}
                 />

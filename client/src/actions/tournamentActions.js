@@ -44,7 +44,7 @@ export const getTournamentsByUserName = (userName) => (dispatch) => {
 export const getTournaments = () => (dispatch) => {
   dispatch(setTournamentsLoading());
   axios
-    .get("/api/tournaments")
+    .get(`/api/tournaments/`)
     .then((res) =>
       dispatch({
         type: GET_TOURNAMENTS,

@@ -1,0 +1,6 @@
+.contact-container {
+  min-height: 450px;
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+}

@@ -10,13 +10,13 @@ import {
   Input,
   ModalHeader,
   InputGroup,
-  InputGroupAddon,
-  InputGroupText,
 } from "reactstrap";
 
 import { connect } from "react-redux";
-import { editTournament } from "../actions/tournamentActions";
-import PropTypes from "prop-types";
+import {
+  editTournament,
+  getTournamentsByUserId,
+} from "../actions/tournamentActions";
 
 function TournamentUpdateModal(props) {
   const [modal, setModal] = useState(false);
@@ -64,6 +64,7 @@ function TournamentUpdateModal(props) {
 
     //Close modal
     toggle();
+    props.getTournamentsByUserId(props.auth.user._id);
   };
   return (
     <Fragment>
@@ -74,7 +75,7 @@ function TournamentUpdateModal(props) {
         size="sm"
         onClick={onClickEditTournamentTest}
       >
-        edit
+        <i className="fas fa-edit"></i>
       </Button>
 
       <Modal isOpen={modal} toggle={toggle}>
@@ -100,11 +101,8 @@ function TournamentUpdateModal(props) {
                 defaultValue={onChangeValues.placement}
                 onChange={onChange}
               />
-              <Label for="buyInCost">Buy-in</Label>
+              <Label for="buyInCost">Buyin</Label>
               <InputGroup>
-                {/* <InputGroupAddon addonType="prepend">
-                  <InputGroupText>SEK</InputGroupText>
-                </InputGroupAddon> */}
                 <Input
                   type="text"
                   name="buyInCost"
@@ -159,6 +157,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, { editTournament })(
-  TournamentUpdateModal
-);
+export default connect(mapStateToProps, {
+  editTournament,
+  getTournamentsByUserId,
+})(TournamentUpdateModal);

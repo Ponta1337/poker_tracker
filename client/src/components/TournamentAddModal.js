@@ -13,7 +13,6 @@ import {
 
 import { connect } from "react-redux";
 import { addTournament } from "../actions/tournamentActions";
-import PropTypes from "prop-types";
 
 function TournamentModalFunc(props) {
   const [modal, setModal] = useState(false);
@@ -22,6 +21,7 @@ function TournamentModalFunc(props) {
     userName: "",
   });
   const [tournamentAdded, setTournamentAdded] = useState(false);
+  const [isValid, SetIsValid] = useState(null);
 
   const toggle = () => {
     setModal(!modal);
@@ -57,10 +57,16 @@ function TournamentModalFunc(props) {
 
     toggle();
   };
+
   return (
     <div>
       {props.isAuthenticated ? (
-        <Button color="dark" style={{ marginBottom: "2rem" }} onClick={toggle}>
+        <Button
+          color="primary"
+          style={{ marginBottom: "2rem" }}
+          onClick={toggle}
+          block
+        >
           Add Tournament
         </Button>
       ) : null}
@@ -83,10 +89,10 @@ function TournamentModalFunc(props) {
                 placeholder="Add Tournament"
                 onChange={onChange}
               />
-              <Label for="buyInCost">Buy-in</Label>
+              <Label for="buyInCost">Buyin</Label>
               <Input
                 required="true"
-                type="text"
+                type="number"
                 name="buyInCost"
                 id="tournament"
                 placeholder="Tournament cost"
@@ -95,7 +101,7 @@ function TournamentModalFunc(props) {
               <Label for="placement">Placement</Label>
               <Input
                 required="true"
-                type="text"
+                type="number"
                 name="placement"
                 id="tournament"
                 placeholder="Placement"
@@ -104,14 +110,14 @@ function TournamentModalFunc(props) {
               <Label for="cashedFor">Cashed</Label>
               <Input
                 required="true"
-                type="text"
+                type="number"
                 name="cashedFor"
                 id="tournament"
                 placeholder="How much did you cash for?"
                 onChange={onChange}
               />
               <Button color="dark" style={{ marginTop: "2rem" }} block>
-                Add Tournament
+                Add tournament
               </Button>
             </FormGroup>
           </Form>

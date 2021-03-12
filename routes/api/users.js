@@ -56,25 +56,47 @@ router.post("/", (req, res) => {
   });
 });
 
-router.get("/:name", (req, res) => {
+// router.get("/:userName", (req, res) => {
+//   User.find({ name: req.params.name }).then((user) => res.json(user));
+// });
+
+router.get("/:userId", (req, res) => {
   //res.send("/5fd914443452ee21d5ddad2a");
   User.findOne(
-    { name: req.params.name },
+    { _id: req.params.userId },
     {
-      _id: "$_id",
+      register_date: "$register_date",
+      last_visited_date: "$last_visited_date",
+      profile_views: "$profile_views",
+      _id: 0,
     }
   ).then((user) => res.json(user));
 });
 
-router.get("/username", (req, res) => {
-  //res.send("/5fd914443452ee21d5ddad2a");
-  User.find(
-    {},
+router.put("/visited/:userId", (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.params.userId },
     {
-      name: "$name",
-      // _id: 0,
+      last_visited_date: Date.now(),
+      $inc: { profile_views: 1 },
+    },
+
+    {
+      useFindAndModify: false,
+      //returnNewDocument: true,s
     }
   ).then((user) => res.json(user));
 });
+
+// router.get("/username", (req, res) => {
+//   //res.send("/5fd914443452ee21d5ddad2a");
+//   User.find(
+//     {},
+//     {
+//       name: "$name",
+//       // _id: 0,
+//     }
+//   ).then((user) => res.json(user));
+// });
 
 module.exports = router;

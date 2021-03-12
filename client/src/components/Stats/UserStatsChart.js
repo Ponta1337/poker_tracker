@@ -31,11 +31,13 @@ function UserStatsChart(props) {
       labels: numArr,
       datasets: [
         {
-          label: "Profit History",
-          fill: false,
+          label: "Profit History $",
+          fill: true,
           lineTension: 0.5,
           data: cashesArr,
           borderWidth: 4,
+          // pointBackgroundColor: "green",
+          // borderColor: "#0000ff",
         },
       ],
     });
@@ -46,7 +48,7 @@ function UserStatsChart(props) {
     getCashes();
   }, [tournaments]);
   return (
-    <Container style={{ paddingLeft: 0 }}>
+    <Container className="mt-4" fluid="sm" style={{ padding: 0 }}>
       {props.userStats.loading ? (
         <Spinner
           size="lg"
@@ -57,12 +59,15 @@ function UserStatsChart(props) {
       ) : (
         <div
           style={{
-            height: "250px",
-            width: "500px",
-            marginTop: "20px",
+            //   height: "250px",
+            //   width: "500px",
+            //   marginTop: "20px",
+            border: `1px solid rgba(0,0,0,.125)`,
+
             backgroundColor: "white",
           }}
         >
+          <h5 className="red-header">Graph</h5>
           <Line
             data={chartData}
             options={{

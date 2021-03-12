@@ -12,7 +12,8 @@ const Tournament = require("../../models/Tournament");
 // { cashedFor: { $gt: 0 } },
 router.get("/", (req, res) => {
   Tournament.find()
-    .limit(10)
+    .limit(50)
+    // .limit(8 * req.params.pageNumber)
     .sort({ date: -1 })
     .then((tournaments) => res.json(tournaments));
 });

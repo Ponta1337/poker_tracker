@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import dateFormat from "dateformat";
 import { Container, Table, Row, Spinner } from "reactstrap";
 
@@ -29,24 +29,25 @@ function UserTournamentsList(props) {
   };
 
   return (
-    <Container>
+    <Fragment>
       {!props.tournament.loading ? (
-        <Row>
+        <Container fluid="sm" className="mt-4 mt-md-0" style={{ padding: 0 }}>
+          <h5 className="red-header">Recent tournaments</h5>
           {!props.tournament.isEmpty ? (
-            <Table style={{ backgroundColor: "white" }}>
+            <Table responsive style={{ backgroundColor: "white" }}>
               <thead>
                 <tr>
                   <th>Tournament </th>
                   <th>Buyin</th>
                   <th>Cash</th>
-                  <th>Placement</th>
+                  <th>Place</th>
                   <th>Date</th>
                 </tr>
               </thead>
               <tbody>{tournaments.map(renderTournament)}</tbody>
             </Table>
           ) : null}
-        </Row>
+        </Container>
       ) : (
         <Spinner
           size="lg"
@@ -55,7 +56,7 @@ function UserTournamentsList(props) {
           style={{ justifyContent: "center" }}
         />
       )}
-    </Container>
+    </Fragment>
   );
 }
 

@@ -1,14 +1,15 @@
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import "./LeaderBoardList.css";
+
 import {
   ListGroup,
   ListGroupItem,
-  Card,
   Row,
   Col,
   Spinner,
-  CardTitle,
+  Container,
 } from "reactstrap";
 
 import { getLeaderBoardStats } from "../actions/userStatsActions";
@@ -22,35 +23,31 @@ function LeaderBoardList(props) {
   }, []);
 
   return (
-    <Fragment>
+    <Container>
+      <h5 className="red-header">Earnings</h5>
       {!props.userStats.loading ? (
-        <Card className="text-left" style={{ width: "26rem", padding: 10 }}>
-          <CardTitle style={{ textAlign: "center" }}>TOP EARNINGS</CardTitle>
-          <ListGroup variant="flush">
-            {stats.map(({ _id, totalEarnings }, index) => (
-              <ListGroupItem
-                key={_id}
-                style={{ borderRight: "none", borderLeft: "none" }}
-              >
-                <Row>
-                  <Col sm={2}>{index + 1}</Col>
-                  <Col sm={4}>
-                    <Link
-                      style={{ color: "Crimson" }}
-                      to={`/user/${_id.userName}`}
-                    >
-                      {_id.userName}
-                    </Link>
-                  </Col>
-                  <Col sm={6} style={{ textAlign: "right" }}>
-                    $ {totalEarnings}
-                  </Col>
-                </Row>
-              </ListGroupItem>
-            ))}
-          </ListGroup>
-        </Card>
+        <ListGroup className="lg-list" variant="flush">
+          {stats.map(({ _id, totalEarnings }, index) => (
+            <ListGroupItem className="lg-items" key={_id}>
+              <Row>
+                <Col sm={2}>{index + 1}</Col>
+                <Col sm={5}>
+                  <Link
+                    style={{ color: "#b22022" }}
+                    to={`/user/${_id.userName}`}
+                  >
+                    {_id.userName}
+                  </Link>
+                </Col>
+                <Col sm={5} style={{ textAlign: "right" }}>
+                  $ {totalEarnings}
+                </Col>
+              </Row>
+            </ListGroupItem>
+          ))}
+        </ListGroup>
       ) : (
+        // </Card>
         <Spinner
           size="lg"
           animation="grow"
@@ -58,7 +55,7 @@ function LeaderBoardList(props) {
           style={{ justifyContent: "center" }}
         />
       )}
-    </Fragment>
+    </Container>
   );
 }
 

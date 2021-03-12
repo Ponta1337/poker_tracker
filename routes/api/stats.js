@@ -98,9 +98,9 @@ router.get("/allstatss/:userName", (req, res) => {
 //`/api/tournaments/${userId}`;
 
 router.get("/id/:userName", (req, res) => {
-  var hej = req.params.userName;
+  let name = req.params.userName;
   Tournament.aggregate([
-    { $match: { userName: new RegExp("^" + hej + "$", "i") } },
+    { $match: { userName: new RegExp("^" + name + "$", "i") } },
     {
       $group: {
         _id: "$userId",

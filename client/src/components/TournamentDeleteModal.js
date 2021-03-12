@@ -37,7 +37,7 @@ function TournamentDeleteModal(props) {
         size="sm"
         onClick={onClickSetIdAndToggle}
       >
-        &times;
+        <i className="fas fa-trash-alt"></i>
       </Button>
 
       <Modal isOpen={modal} toggle={toggle}>

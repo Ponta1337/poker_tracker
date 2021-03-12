@@ -1,0 +1,35 @@
+.banner {
+  /* background: linear-gradient(
+    180deg,
+    rgba(188, 32, 41, 1) 0%,
+    rgba(149, 31, 36, 1) 100%
+  ); */
+  /* 
+  background: rgb(117, 104, 104); */
+  background-color: #ae0000;
+  margin-bottom: 20px;
+  padding-bottom: 0px;
+  padding-top: 10px;
+}
+
+.col > h5 {
+  color: whitesmoke;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.col > p {
+  font-size: 13px;
+}
+
+.col {
+  align-items: center;
+  text-align: center;
+}
+
+.col > h3 {
+  color: whitesmoke;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px;
+}

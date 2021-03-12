@@ -10,13 +10,11 @@ import {
 } from "../actions/tournamentActions";
 
 import TournamentUpdateModal from "./TournamentUpdateModal";
-
 import TournamentDeleteModal from "./TournamentDeleteModal";
 import TournamentAddModal from "./TournamentAddModal";
 
 function TournamentListFunc(props) {
   const { getTournamentsByUserId } = props;
-  const { getTournamentsByUserName } = props;
   const { tournaments } = props.tournament;
 
   useEffect(() => {
@@ -45,24 +43,21 @@ function TournamentListFunc(props) {
   };
 
   return (
-    <Container style={{ marginLeft: 60 }}>
+    <Container className="mt-4 mt-md-0" style={{ padding: 0 }}>
+      <h5 className="red-header">Recent Tournaments</h5>
       {!props.tournament.loading ? (
         <Row>
           <Col>
-            <ButtonGroup aria-label="handle-tournaments">
-              <TournamentAddModal />
-            </ButtonGroup>
-
             {
               props.tournament.tournaments.length !== 0 &&
               props.tournament.tournamentsByUserIdisLoaded ? (
-                <Table style={{ backgroundColor: "white" }}>
+                <Table responsive style={{ backgroundColor: "white" }}>
                   <thead>
                     <tr>
                       <th>Tournament </th>
                       <th>Buyin</th>
                       <th>Cash</th>
-                      <th>Placement</th>
+                      <th>Place</th>
                       <th>Date</th>
                       <th></th>
                     </tr>
@@ -82,6 +77,9 @@ function TournamentListFunc(props) {
           style={{ justifyContent: "center" }}
         />
       )}
+      {/* <ButtonGroup aria-label="handle-tournaments"> */}
+      <TournamentAddModal />
+      {/* </ButtonGroup> */}
     </Container>
   );
 }

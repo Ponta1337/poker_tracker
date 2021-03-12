@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: true,
+    // required: true,
     unique: true,
   },
   password: {
@@ -20,6 +20,14 @@ const UserSchema = new mongoose.Schema({
   register_date: {
     type: Date,
     default: Date.now,
+  },
+  last_visited_date: {
+    type: Date,
+    default: Date.now,
+  },
+  profile_views: {
+    type: Number,
+    default: 0,
   },
 });
 

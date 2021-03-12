@@ -13,8 +13,10 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import LoginModal from "./auth/LoginModal";
 import RegisterModal from "./auth/RegisterModal";
+import DemoUserLogin from "./auth/DemoUserLogin";
 import Logout from "./auth/Logout";
 import { Link } from "react-router-dom";
+import "./AppNavBar.css";
 
 class AppNavBar extends Component {
   state = {
@@ -62,32 +64,33 @@ class AppNavBar extends Component {
         <NavItem>
           <LoginModal />
         </NavItem>
+        <NavItem>
+          <DemoUserLogin />
+        </NavItem>
       </Fragment>
     );
     return (
-      <div>
-        <Navbar color="dark" dark expand="sm" className="mb-5">
-          <Container>
-            <NavItem style={{ listStyleType: "none" }}>
-              <NavbarBrand>
-                <Link to="/" className={"nav-link"} style={{ color: "white" }}>
-                  Poker Tracker
-                </Link>
-              </NavbarBrand>
-            </NavItem>
-            <NavItem style={{ listStyleType: "none" }}>
-              <PlayerSearch />
-            </NavItem>
+      <Navbar color="dark" dark expand="sm">
+        <Container>
+          <NavItem style={{ listStyleType: "none" }}>
+            <NavbarBrand>
+              <Link to="/" className={"nav-link"} style={{ color: "white" }}>
+                Poker Tracker
+              </Link>
+            </NavbarBrand>
+          </NavItem>
+          <NavItem style={{ listStyleType: "none" }}>
+            <PlayerSearch />
+          </NavItem>
 
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className="ml-auto" navbar>
-                {isAuthenticated ? authLinks : guestLinks}
-              </Nav>
-            </Collapse>
-          </Container>
-        </Navbar>
-      </div>
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              {isAuthenticated ? authLinks : guestLinks}
+            </Nav>
+          </Collapse>
+        </Container>
+      </Navbar>
     );
   }
 }

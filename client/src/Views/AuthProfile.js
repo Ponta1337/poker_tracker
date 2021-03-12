@@ -6,6 +6,7 @@ import UserStats from "../components/Stats/UserStats";
 import { Container, Row, Col, Spinner } from "reactstrap";
 import { getUserStats } from "../actions/userStatsActions";
 import ProfileTournamentList from "../components/ProfileTournamentList";
+import "./AuthProfile.css";
 
 function MyTournaments(props) {
   const { isAuthenticated } = props;
