@@ -29,18 +29,19 @@ const App = () => {
         <div className="App">
           <AppNavBar />
           <LoginSuccessAlert />
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/profile/:userName" exact component={AuthProfile} />
-            <Route path="/user/:userName" component={UserProfile} />
-            <Route path="/about" exact component={About} />
-            <Route path="/contact" exact component={Contact} />
-            <Route path="/search" exact component={PlayerSearch} />
-            <Route path="*">
-              {" "}
-              <NoMatch />
-            </Route>
-          </Switch>
+          <div className="app-container">
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/profile/:userName" exact component={AuthProfile} />
+              <Route path="/user/:userName" component={UserProfile} />
+              <Route path="/about" exact component={About} />
+              <Route path="/contact" exact component={Contact} />
+              <Route path="/search" exact component={PlayerSearch} />
+              <Route path="*">
+                <NoMatch />
+              </Route>
+            </Switch>
+          </div>
           <Footer />
         </div>
       </Router>

@@ -23,6 +23,10 @@ body {
   background-color: rgb(233, 233, 233);
 }
 
+.app-container {
+  min-height: 80vh !important;
+}
+
 .red-header {
   text-align: center;
   color: whitesmoke;
