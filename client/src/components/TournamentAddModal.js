@@ -21,7 +21,6 @@ function TournamentModalFunc(props) {
     userName: "",
   });
   const [tournamentAdded, setTournamentAdded] = useState(false);
-  const [isValid, SetIsValid] = useState(null);
 
   const toggle = () => {
     setModal(!modal);

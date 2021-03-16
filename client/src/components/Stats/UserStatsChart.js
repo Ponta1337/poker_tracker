@@ -32,12 +32,12 @@ function UserStatsChart(props) {
       datasets: [
         {
           label: "Profit History $",
-          fill: true,
-          lineTension: 0.5,
+          fill: false,
+          lineTension: 0.3,
           data: cashesArr,
-          borderWidth: 4,
+          borderWidth: 3,
           // pointBackgroundColor: "green",
-          // borderColor: "#0000ff",
+          borderColor: "#37a193",
         },
       ],
     });

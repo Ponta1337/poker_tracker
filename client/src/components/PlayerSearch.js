@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Form, Input, InputGroup } from "reactstrap";
+import { Form, Input, InputGroup, Container } from "reactstrap";
 import { getPlayerByName } from "../actions/userStatsActions";
 import { getUsers } from "../actions/userActions";
 
@@ -22,13 +22,10 @@ function PlayerSearch(props) {
   };
 
   return (
-    <div>
+    <Container className="mt-4 mt-md-0 " style={{ marginRight: "30px" }}>
       <Form onSubmit={onSubmitName}>
-        <InputGroup onSubmit={onSubmitName}>
-          {/* {userMatch && nameSubmited ? <Redirect to={`/user/${id}/`} /> : null} */}
-          {/* <Form onSubmit={onSubmitName}> */}
+        <InputGroup>
           <Input
-            // onSubmit={onSubmitName}
             type="search"
             name="search"
             id="exampleSearch"
@@ -44,10 +41,9 @@ function PlayerSearch(props) {
           >
             <i className="fas fa-search"></i>
           </button>
-          {/* </Form> */}
         </InputGroup>
       </Form>
-    </div>
+    </Container>
   );
 }
 

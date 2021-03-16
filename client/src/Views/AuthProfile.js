@@ -1,21 +1,22 @@
 import UserStatsChart from "../components/Stats/UserStatsChart";
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import UserStats from "../components/Stats/UserStats";
 import { Container, Row, Col, Spinner } from "reactstrap";
-import { getUserStats } from "../actions/userStatsActions";
+import { getUserStats, getDates } from "../actions/userStatsActions";
 import ProfileTournamentList from "../components/ProfileTournamentList";
 import "./AuthProfile.css";
-
+import UserBanner from "../components/UserBanner";
 function MyTournaments(props) {
   const { isAuthenticated } = props;
-  const { getUserStats } = props;
+  const { getUserStats, getDates } = props;
   const { tournaments } = props.tournament;
 
   useEffect(() => {
     if (isAuthenticated) {
       getUserStats(props.auth.user._id);
+      getDates(props.auth.user._id);
     }
   }, [isAuthenticated, tournaments]);
 
@@ -31,22 +32,25 @@ function MyTournaments(props) {
           style={{ justifyContent: "center" }}
         />
       ) : (
-        <Container>
-          <Row>
-            {props.tournament.tournaments.length === 0 ? (
-              <h3>Add your first tournmanet!</h3>
-            ) : (
-              <Col sm={5}>
-                <UserStats />
-                <UserStatsChart />
-              </Col>
-            )}
+        <div>
+          <UserBanner />
+          <Container>
+            <Row>
+              {props.tournament.tournaments.length === 0 ? (
+                <h3>Add your first tournmanet!</h3>
+              ) : (
+                <Col sm={5}>
+                  <UserStats />
+                  <UserStatsChart />
+                </Col>
+              )}
 
-            <Col sm={7}>
-              <ProfileTournamentList />
-            </Col>
-          </Row>
-        </Container>
+              <Col sm={7}>
+                <ProfileTournamentList />
+              </Col>
+            </Row>
+          </Container>
+        </div>
       )}
     </div>
   );
@@ -59,4 +63,6 @@ const mapStateToProps = (state) => ({
   userSats: state.userSats,
 });
 
-export default connect(mapStateToProps, { getUserStats })(MyTournaments);
+export default connect(mapStateToProps, { getUserStats, getDates })(
+  MyTournaments
+);

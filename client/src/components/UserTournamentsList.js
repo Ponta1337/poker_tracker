@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import dateFormat from "dateformat";
-import { Container, Table, Row, Spinner } from "reactstrap";
+import { Container, Table, Spinner } from "reactstrap";
 
 import { connect } from "react-redux";
 import {

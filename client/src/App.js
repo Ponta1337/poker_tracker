@@ -15,6 +15,8 @@ import { loadUser } from "./actions/authActions";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import PlayerSearch from "./components/PlayerSearch";
+import LoginSuccessAlert from "./components/LoginSuccessAlert";
 
 const App = () => {
   useEffect(() => {
@@ -26,13 +28,14 @@ const App = () => {
       <Router>
         <div className="App">
           <AppNavBar />
-
+          <LoginSuccessAlert />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/profile/:userName" exact component={AuthProfile} />
             <Route path="/user/:userName" component={UserProfile} />
             <Route path="/about" exact component={About} />
             <Route path="/contact" exact component={Contact} />
+            <Route path="/search" exact component={PlayerSearch} />
             <Route path="*">
               {" "}
               <NoMatch />

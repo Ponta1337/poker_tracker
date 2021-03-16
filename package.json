@@ -32,7 +32,8 @@
     "react-chartjs-2": "^2.11.1",
     "react-datepicker": "^3.3.0",
     "react-dom": "^17.0.1",
-    "react-infinite-scroll-component": "^6.0.0"
+    "react-infinite-scroll-component": "^6.0.0",
+    "react-media-hook": "^0.4.9"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"

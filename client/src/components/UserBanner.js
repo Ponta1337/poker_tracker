@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, useParams } from "react-router-dom";
-import { Container, Row, Col, Spinner } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import "./UserBanner.css";
 import { connect } from "react-redux";
 import moment from "moment";

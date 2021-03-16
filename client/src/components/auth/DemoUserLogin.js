@@ -4,19 +4,16 @@ import {
   Modal,
   ModalBody,
   Form,
-  FormGroup,
-  Label,
-  Input,
   ModalHeader,
   NavLink,
-  Alert,
 } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../../actions/authActions";
 import { clearErrors } from "../../actions/errorActions";
+import { withRouter } from "react-router-dom";
 
-class LoginModal extends Component {
+class DemoUserLogin extends Component {
   state = {
     modal: false,
     email: "demouser@gmail.com",
@@ -32,7 +29,7 @@ class LoginModal extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { error, isAuthenticated } = this.props;
+    const { error } = this.props;
     if (error !== prevProps.error) {
       //Check for register error
       if (error.id === "LOGIN_FAIL") {
@@ -60,6 +57,7 @@ class LoginModal extends Component {
     };
     //Attempt to login
     this.props.login(user);
+    this.props.history.push(`/profile/demouser`);
   };
 
   render() {
@@ -96,4 +94,6 @@ const mapStateToProps = (state) => ({
   error: state.error,
 });
 
-export default connect(mapStateToProps, { login, clearErrors })(LoginModal);
+export default connect(mapStateToProps, { login, clearErrors })(
+  withRouter(DemoUserLogin)
+);

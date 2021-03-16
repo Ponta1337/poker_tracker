@@ -32,7 +32,7 @@ function PublicTournamentHistory(props) {
   };
 
   return (
-    <Container style={{ padding: 0 }}>
+    <Container className="mt-4 mt-md-0" style={{ padding: 0 }}>
       <h5 className="red-header">Tournament History</h5>
       {!props.tournament.loading ? (
         <ListGroup className="tournament-lg">
@@ -43,11 +43,10 @@ function PublicTournamentHistory(props) {
             .map(({ _id, name, placement, cashedFor, userName, date }) => (
               // (cashedFor > 0 ? : null)
               // <CSSTransition key={_id} timeout={500} classNames="fade">
-              <ListGroupItem className="history-items" key={_id}>
+              <ListGroupItem action className="history-items" key={_id}>
                 <div>
                   <Link
                     style={{
-                      textDecoration: "none",
                       color: "#b22022",
                     }}
                     to={`/user/${userName}`}

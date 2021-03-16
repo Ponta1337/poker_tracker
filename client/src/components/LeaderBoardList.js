@@ -23,12 +23,12 @@ function LeaderBoardList(props) {
   }, []);
 
   return (
-    <Container>
+    <Container style={{ padding: 0 }}>
       <h5 className="red-header">Earnings</h5>
       {!props.userStats.loading ? (
         <ListGroup className="lg-list" variant="flush">
           {stats.map(({ _id, totalEarnings }, index) => (
-            <ListGroupItem className="lg-items" key={_id}>
+            <ListGroupItem action className="lg-items" key={_id}>
               <Row>
                 <Col sm={2}>{index + 1}</Col>
                 <Col sm={5}>

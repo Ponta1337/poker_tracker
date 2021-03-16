@@ -1,4 +1,10 @@
 .MyTournaments {
-  margin-top: 20px;
   width: 100%;
+}
+
+.name-display {
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  padding-bottom: 10px;
 }
