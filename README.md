@@ -3,7 +3,7 @@ Poker Tracker is a platform where poker players can track their poker results an
 
 
 Visit the live version! 
-https://poker-demo-app.herokuapp.com
+<a href="https://poker-demo-app.herokuapp.com">Poker Tracker</a>
 <br/>
 It might take a while to load if the server has been inactive for a while.
 
