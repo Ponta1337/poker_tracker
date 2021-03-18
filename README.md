@@ -14,7 +14,7 @@ I later realized that Svenska Spel has a rather large poker community but not a 
 Naturally I decided to expand the project to meet these needs.
 
 
-## Current Status ![50%](https://progress-bar.dev/40/?title=completed)
+## Current Status ![35%](https://progress-bar.dev/35/?title=completed)
 The project is still in the early stages.
 
 ### Main Features:
@@ -38,3 +38,4 @@ The project is still in the early stages.
 - Node.js
 - Express.js
 - MongoDB
+- Redux
