@@ -12,13 +12,12 @@ import {
   InputGroup,
 } from "reactstrap";
 
-import { connect } from "react-redux";
-import {
-  editTournament,
-  getTournamentsByUserId,
-} from "../actions/tournamentActions";
+import { useDispatch } from "react-redux";
+import { editTournament } from "../actions/tournamentActions";
 
-function TournamentUpdateModal(props) {
+function TournamentUpdateModal({ tournamentToUpdate }) {
+  const dispatch = useDispatch();
+
   const [modal, setModal] = useState(false);
   const [onChangeValues, setOnChangeValues] = useState({});
 
@@ -30,11 +29,11 @@ function TournamentUpdateModal(props) {
     setOnChangeValues({
       ...onChangeValues,
 
-      name: props.tournamentToEdit.name,
-      buyInCost: props.tournamentToEdit.buyInCost,
-      cashedFor: props.tournamentToEdit.cashedFor,
-      date: props.tournamentToEdit.date,
-      placement: props.tournamentToEdit.placement,
+      name: tournamentToUpdate.name,
+      buyInCost: tournamentToUpdate.buyInCost,
+      cashedFor: tournamentToUpdate.cashedFor,
+      date: tournamentToUpdate.date,
+      placement: tournamentToUpdate.placement,
     });
 
     toggle();
@@ -51,7 +50,7 @@ function TournamentUpdateModal(props) {
     e.preventDefault();
 
     const editedTournament = {
-      _id: props.tournamentToEdit._id,
+      _id: tournamentToUpdate._id,
       name: onChangeValues.name,
       placement: onChangeValues.placement,
       cashedFor: onChangeValues.cashedFor,
@@ -60,15 +59,13 @@ function TournamentUpdateModal(props) {
     };
     //Edit tournament via editTournament action
 
-    props.editTournament(editedTournament);
+    dispatch(editTournament(editedTournament));
 
     //Close modal
     toggle();
-    props.getTournamentsByUserId(props.auth.user._id);
   };
   return (
     <Fragment>
-      {/* <div> */}
       <Button
         className="edit-btn"
         color="primary"
@@ -146,18 +143,4 @@ function TournamentUpdateModal(props) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const tournamentToEditState = ownProps.tourn;
-
-  return {
-    tournament: state.tournament,
-    isAuthenticated: state.auth.isAuthenticated,
-    auth: state.auth,
-    tournamentToEdit: tournamentToEditState,
-  };
-};
-
-export default connect(mapStateToProps, {
-  editTournament,
-  getTournamentsByUserId,
-})(TournamentUpdateModal);
+export default TournamentUpdateModal;

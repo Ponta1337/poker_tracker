@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Container, Spinner } from "reactstrap";
 
-function UserStatsChart(props) {
+function UserStatsChart() {
+  const { tournaments } = useSelector((state) => state.tournament);
+  const { loading } = useSelector((state) => state.userStats);
+
   const [chartData, setChartData] = useState({});
-  const { tournaments } = props.tournament;
 
   const numArr = Array.from({ length: tournaments.length + 1 }, (_, i) => i);
 
@@ -36,7 +38,6 @@ function UserStatsChart(props) {
           lineTension: 0.3,
           data: cashesArr,
           borderWidth: 3,
-          // pointBackgroundColor: "green",
           borderColor: "#37a193",
         },
       ],
@@ -49,7 +50,7 @@ function UserStatsChart(props) {
   }, [tournaments]);
   return (
     <Container className="mt-4" fluid="sm" style={{ padding: 0 }}>
-      {props.userStats.loading ? (
+      {loading ? (
         <Spinner
           size="lg"
           animation="grow"
@@ -59,11 +60,7 @@ function UserStatsChart(props) {
       ) : (
         <div
           style={{
-            //   height: "250px",
-            //   width: "500px",
-            //   marginTop: "20px",
             border: `1px solid rgba(0,0,0,.125)`,
-
             backgroundColor: "white",
           }}
         >
@@ -80,14 +77,4 @@ function UserStatsChart(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    tournament: state.tournament,
-    isAuthenticated: state.auth.isAuthenticated,
-    auth: state.auth,
-    currentUser: state.auth.user,
-    userStats: state.userStats,
-  };
-};
-
-export default connect(mapStateToProps, null)(UserStatsChart);
+export default UserStatsChart;

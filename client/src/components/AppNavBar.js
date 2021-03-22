@@ -1,4 +1,5 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
+import { throttle } from "lodash";
 import {
   Collapse,
   Navbar,
@@ -7,106 +8,43 @@ import {
   NavItem,
   Container,
 } from "reactstrap";
-import PlayerSearch from "./PlayerSearch";
-import { connect } from "react-redux";
-import LoginModal from "./auth/LoginModal";
-import RegisterModal from "./auth/RegisterModal";
-import DemoUserLogin from "./auth/DemoUserLogin";
-import Logout from "./auth/Logout";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./AppNavBar.css";
+import AuthLinks from "./AuthLinks";
+import { GuestLinks } from "./GuestLinks";
 
-function AppNavBar(props) {
+function AppNavBar() {
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  const showSearch = () => {
-    if (window.innerWidth <= 750) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  };
-
   useEffect(() => {
-    showSearch();
-  }, []);
+    const onResize = () => {
+      if (window.innerWidth <= 750) {
+        setIsMobile(true);
+      } else {
+        setIsMobile(false);
+      }
+    };
 
-  window.addEventListener("resize", showSearch);
+    const handleResize = throttle(() => {
+      onResize();
+    }, 700);
+
+    window.addEventListener("resize", handleResize);
+    onResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggle = () => {
     setIsOpen(!isOpen);
   };
 
-  const { isAuthenticated, user } = props.auth;
-
-  const authLinks = (
-    <Fragment>
-      {isMobile ? (
-        <Link
-          onClick={() => setIsOpen(false)}
-          to="/search"
-          className={"nav-link"}
-        >
-          Search
-        </Link>
-      ) : (
-        <NavItem style={{ listStyleType: "none" }}>
-          <PlayerSearch />
-        </NavItem>
-      )}
-      {!isMobile ? (
-        <NavItem>
-          <span className="navbar-text mr-3">
-            <strong>{user ? `Welcome ${user.name}` : ""}</strong>
-          </span>
-        </NavItem>
-      ) : null}
-
-      <NavItem>
-        <Link
-          onClick={() => setIsOpen(false)}
-          to={`/profile/${user ? user.name : null}`}
-          className={"nav-link"}
-        >
-          My Profile
-        </Link>
-      </NavItem>
-      <NavItem>
-        <Logout />
-      </NavItem>
-    </Fragment>
-  );
-  const guestLinks = (
-    <Fragment>
-      {isMobile ? (
-        <Link
-          onClick={() => setIsOpen(false)}
-          to="/search"
-          className={"nav-link"}
-        >
-          Search
-        </Link>
-      ) : (
-        <NavItem style={{ listStyleType: "none" }}>
-          <PlayerSearch />
-        </NavItem>
-      )}
-      <NavItem onClick={() => setIsOpen(false)}>
-        <RegisterModal />
-      </NavItem>
-      <NavItem onClick={() => setIsOpen(false)}>
-        <LoginModal />
-      </NavItem>
-      <NavItem onClick={() => setIsOpen(false)}>
-        <DemoUserLogin />
-      </NavItem>
-    </Fragment>
-  );
   return (
     <Navbar color="dark" dark expand="sm">
       <Container>
-        {}
         <NavItem className="nav-brand" style={{ listStyleType: "none" }}>
           <Link to="/" className={"nav-link"} style={{ color: "white" }}>
             Poker Tracker
@@ -116,15 +54,23 @@ function AppNavBar(props) {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            {isAuthenticated ? authLinks : guestLinks}
+            {isAuthenticated ? (
+              <AuthLinks
+                name={user.name}
+                isMobile={isMobile}
+                isOpen={isOpen}
+                setIsOpen={() => setIsOpen(false)}
+              />
+            ) : (
+              <GuestLinks
+                isMobile={isMobile}
+                setIsOpen={() => setIsOpen(false)}
+              />
+            )}
           </Nav>
         </Collapse>
       </Container>
     </Navbar>
   );
 }
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps, null)(AppNavBar);
+export default AppNavBar;

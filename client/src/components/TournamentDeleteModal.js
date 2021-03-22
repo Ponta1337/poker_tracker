@@ -1,27 +1,24 @@
 import React, { Fragment, useState } from "react";
-
 import { Button, Modal, ModalBody, ModalHeader } from "reactstrap";
+import { useDispatch } from "react-redux";
+import { deleteTournament } from "../actions/tournamentActions";
 
-import { connect } from "react-redux";
-import {
-  deleteTournament,
-  getTournamentsByUserId,
-} from "../actions/tournamentActions";
+function TournamentDeleteModal({ tournamentToDeleteId }) {
+  const dispatch = useDispatch();
 
-function TournamentDeleteModal(props) {
   const [modal, setModal] = useState(false);
   const [tournamentId, setTournamentId] = useState(null);
 
   const onDeleteClick = () => {
     setTimeout(() => {
-      props.deleteTournament(tournamentId);
+      dispatch(deleteTournament(tournamentId));
     }, 1000);
 
     toggle();
   };
 
   const onClickSetIdAndToggle = () => {
-    setTournamentId(props.tournamentToDeleteId);
+    setTournamentId(tournamentToDeleteId);
     toggle();
   };
 
@@ -67,18 +64,4 @@ function TournamentDeleteModal(props) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const tournamentToDeleteStateId = ownProps.tournamentToDeleteId;
-  return {
-    tournament: state.tournament,
-    isAuthenticated: state.auth.isAuthenticated,
-    auth: state.auth,
-    currentUser: state.auth.user,
-    tournamentToDeleteId: tournamentToDeleteStateId,
-  };
-};
-
-export default connect(mapStateToProps, {
-  getTournamentsByUserId,
-  deleteTournament,
-})(TournamentDeleteModal);
+export default TournamentDeleteModal;

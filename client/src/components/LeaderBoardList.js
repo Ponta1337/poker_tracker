@@ -1,34 +1,28 @@
 import { useEffect } from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import "./LeaderBoardList.css";
 
-import {
-  ListGroup,
-  ListGroupItem,
-  Row,
-  Col,
-  Spinner,
-  Container,
-} from "reactstrap";
+import { ListGroup, ListGroupItem, Row, Col, Container } from "reactstrap";
 
 import { getLeaderBoardStats } from "../actions/userStatsActions";
+import { loadingSpinner } from "./LoadingSpinner";
 
-function LeaderBoardList(props) {
-  const { stats } = props.userStats;
-  const { getLeaderBoardStats } = props;
+function LeaderBoardList() {
+  const { stats, loading } = useSelector((state) => state.userStats);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getLeaderBoardStats();
+    dispatch(getLeaderBoardStats());
   }, []);
 
   return (
     <Container style={{ padding: 0 }}>
       <h5 className="red-header">Earnings</h5>
-      {!props.userStats.loading ? (
+      {!loading ? (
         <ListGroup className="lg-list" variant="flush">
           {stats.map(({ _id, totalEarnings }, index) => (
-            <ListGroupItem action className="lg-items" key={_id}>
+            <ListGroupItem action className="lg-items" key={index}>
               <Row>
                 <Col sm={2}>{index + 1}</Col>
                 <Col sm={5}>
@@ -47,28 +41,10 @@ function LeaderBoardList(props) {
           ))}
         </ListGroup>
       ) : (
-        // </Card>
-        <Spinner
-          size="lg"
-          animation="grow"
-          color="dark"
-          style={{ justifyContent: "center" }}
-        />
+        loadingSpinner
       )}
     </Container>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    tournament: state.tournament,
-    isAuthenticated: state.auth.isAuthenticated,
-    auth: state.auth,
-    currentUser: state.auth.user,
-    userStats: state.userStats,
-  };
-};
-
-export default connect(mapStateToProps, { getLeaderBoardStats })(
-  LeaderBoardList
-);
+export default LeaderBoardList;

@@ -1,19 +1,18 @@
 import React, { Fragment, useEffect, useState } from "react";
 import dateFormat from "dateformat";
-import { Container, Table, Spinner } from "reactstrap";
+import { Container, Table } from "reactstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { getTournamentsByUserId } from "../actions/tournamentActions";
+import { loadingSpinner } from "./LoadingSpinner";
 
-import { connect } from "react-redux";
-import {
-  deleteTournament,
-  getTournamentsByUserId,
-} from "../actions/tournamentActions";
-
-function UserTournamentsList(props) {
-  const { tournaments } = props.tournament;
-  const { getTournamentsByUserId } = props;
+function UserTournamentList({ userId }) {
+  const { tournaments, loading, isEmpty } = useSelector(
+    (state) => state.tournament
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getTournamentsByUserId(props.userId);
+    dispatch(getTournamentsByUserId(userId));
   }, []);
 
   const renderTournament = (tournament, index) => {
@@ -30,10 +29,10 @@ function UserTournamentsList(props) {
 
   return (
     <Fragment>
-      {!props.tournament.loading ? (
+      {!loading ? (
         <Container fluid="sm" className="mt-4 mt-md-0" style={{ padding: 0 }}>
           <h5 className="red-header">Recent tournaments</h5>
-          {!props.tournament.isEmpty ? (
+          {!isEmpty ? (
             <Table responsive style={{ backgroundColor: "white" }}>
               <thead>
                 <tr>
@@ -49,30 +48,10 @@ function UserTournamentsList(props) {
           ) : null}
         </Container>
       ) : (
-        <Spinner
-          size="lg"
-          animation="grow"
-          color="dark"
-          style={{ justifyContent: "center" }}
-        />
+        loadingSpinner
       )}
     </Fragment>
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const uId = ownProps.pUserId;
-
-  return {
-    tournament: state.tournament,
-    isAuthenticated: state.auth.isAuthenticated,
-    auth: state.auth,
-    currentUser: state.auth.user,
-    userId: uId,
-  };
-};
-
-export default connect(mapStateToProps, {
-  getTournamentsByUserId,
-  deleteTournament,
-})(UserTournamentsList);
+export default UserTournamentList;

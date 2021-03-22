@@ -11,10 +11,13 @@ import {
   Alert,
 } from "reactstrap";
 
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { addTournament } from "../actions/tournamentActions";
 
-function TournamentModalFunc(props) {
+function TournamentAddModal() {
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
   const [modal, setModal] = useState(false);
   const [onChangeValues, setOnChangeValues] = useState({
     userId: "",
@@ -30,8 +33,8 @@ function TournamentModalFunc(props) {
     setOnChangeValues({
       ...onChangeValues,
       [e.target.name]: e.target.value,
-      userId: props.auth.user._id,
-      userName: props.auth.user.name,
+      userId: user._id,
+      userName: user.name,
     });
   };
 
@@ -46,7 +49,7 @@ function TournamentModalFunc(props) {
       buyInCost: onChangeValues.buyInCost,
     };
 
-    props.addTournament(newTournament);
+    dispatch(addTournament(newTournament));
 
     setTournamentAdded(true);
 
@@ -59,7 +62,7 @@ function TournamentModalFunc(props) {
 
   return (
     <div>
-      {props.isAuthenticated ? (
+      {isAuthenticated ? (
         <Button
           color="primary"
           style={{ marginBottom: "2rem" }}
@@ -126,10 +129,4 @@ function TournamentModalFunc(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  tournament: state.tournament,
-  isAuthenticated: state.auth.isAuthenticated,
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps, { addTournament })(TournamentModalFunc);
+export default TournamentAddModal;

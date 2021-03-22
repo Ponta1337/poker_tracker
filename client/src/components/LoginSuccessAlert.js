@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Alert } from "reactstrap";
 
-function LoginSuccessAlert(props) {
+function LoginSuccessAlert() {
+  const { loginSuccess, user } = useSelector((state) => state.auth);
   const [showAlert, setShowAlert] = useState(true);
 
   useEffect(() => {
@@ -11,17 +12,11 @@ function LoginSuccessAlert(props) {
     }, 10000);
   }, []);
 
-  return props.auth.loginSuccess && showAlert ? (
+  return loginSuccess && showAlert ? (
     <Alert style={{ textAlign: "center" }} color="success">
-      {`Login successful! Welcome ${props.auth.user.name}`}
+      {`Login successful! Welcome ${user.name}`}
     </Alert>
   ) : null;
 }
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-  };
-};
-
-export default connect(mapStateToProps, null)(LoginSuccessAlert);
+export default LoginSuccessAlert;

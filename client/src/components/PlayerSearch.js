@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
 import { Form, Input, InputGroup, Container } from "reactstrap";
-import { getPlayerByName } from "../actions/userStatsActions";
-import { getUsers } from "../actions/userActions";
 
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-function PlayerSearch(props) {
+function PlayerSearch() {
   const [searchPlayer, SetSearchPlayer] = useState("");
+  let history = useHistory();
 
   const onChange = (e) => {
     SetSearchPlayer(e.target.value);
@@ -16,7 +14,7 @@ function PlayerSearch(props) {
   const onSubmitName = (e) => {
     e.preventDefault();
     if (searchPlayer !== "") {
-      props.history.push(`/user/${searchPlayer}`);
+      history.push(`/user/${searchPlayer}`);
       SetSearchPlayer("");
     }
   };
@@ -47,19 +45,4 @@ function PlayerSearch(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    tournament: state.tournament,
-    isAuthenticated: state.auth.isAuthenticated,
-    auth: state.auth,
-    currentUser: state.auth.user,
-    userStats: state.userStats,
-    users: state.user.users,
-    history: state.history,
-  };
-};
-
-export default connect(mapStateToProps, {
-  getPlayerByName,
-  getUsers,
-})(withRouter(PlayerSearch));
+export default PlayerSearch;

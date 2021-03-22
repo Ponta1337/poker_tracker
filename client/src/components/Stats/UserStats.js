@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   ListGroup,
   ListGroupItem,
@@ -7,35 +7,34 @@ import {
   Spinner,
   Row,
 } from "reactstrap";
-import { getUserStats } from "../../actions/userStatsActions";
-// import { useEffect, useState } from "react";
 
-function UserStats(props) {
-  const { stats } = props.userStats;
+function UserStats() {
+  const { stats, loading } = useSelector((state) => state.userStats);
 
   return (
     <Container className="container-border" style={{ padding: 0 }}>
       <h5 className="red-header">Stats</h5>
-      {!props.userStats.loading ? (
-        // <Card className="text-center">
+      {!loading ? (
         <ListGroup variant="flush">
           {stats.map(
-            ({
-              totalEarnings,
-              cashedForSum,
-              buyInCostSum,
-              biggestCash,
-              ROI,
-              avgBuyIn,
-            }) => (
-              <Row>
+            (
+              {
+                totalEarnings,
+                cashedForSum,
+                buyInCostSum,
+                biggestCash,
+                ROI,
+                avgBuyIn,
+              },
+              index
+            ) => (
+              <Row key={index}>
                 <Col>
                   <ListGroupItem>
                     Total Earnings: ${totalEarnings}
                   </ListGroupItem>
                   <ListGroupItem>Total buyins: ${buyInCostSum}</ListGroupItem>
                   <ListGroupItem>Total cashes: ${cashedForSum}</ListGroupItem>
-                  {/* <ListGroupItem>Tournaments played: TBA</ListGroupItem> */}
                   <ListGroupItem>
                     Avg Buyin: ${Math.round(avgBuyIn)}
                   </ListGroupItem>
@@ -58,17 +57,4 @@ function UserStats(props) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  // const uId = ownProps.pUserId;
-
-  return {
-    tournament: state.tournament,
-    isAuthenticated: state.auth.isAuthenticated,
-    auth: state.auth,
-    currentUser: state.auth.user,
-    userStats: state.userStats,
-    // userId: uId,
-  };
-};
-
-export default connect(mapStateToProps, { getUserStats })(UserStats);
+export default UserStats;

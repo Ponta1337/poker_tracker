@@ -1,7 +1,6 @@
 import React from "react";
 import LeaderBoardList from "../components/LeaderBoardList";
 import "./Home.css";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "reactstrap";
 import PublicTournamentHistory from "../components/PublicTournamentHistory";
@@ -10,8 +9,6 @@ const Home = () => {
   return (
     <Container
       style={{
-        // border: "solid 1px",
-        //backgroundColor: "#fffe9",
         borderRadius: "5px",
       }}
       className="mt-5"

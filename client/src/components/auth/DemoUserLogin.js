@@ -57,7 +57,7 @@ class DemoUserLogin extends Component {
     };
     //Attempt to login
     this.props.login(user);
-    this.props.history.push(`/profile/demouser`);
+    this.props.history.push(`/profile/DemoUser`);
   };
 
   render() {

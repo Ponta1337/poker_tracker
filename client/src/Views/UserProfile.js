@@ -2,9 +2,9 @@ import UserStatsChart from "../components/Stats/UserStatsChart";
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect } from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import UserStats from "../components/Stats/UserStats";
-import { BrowserRouter as Router, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { Container, Row, Col } from "reactstrap";
 import {
@@ -13,30 +13,32 @@ import {
   getDates,
   updateLastVisited,
 } from "../actions/userStatsActions";
-import UserTournamentsList from "../components/UserTournamentsList";
+import UserTournamentList from "../components/UserTournamentList";
 import UserBanner from "../components/UserBanner";
 
-function UserProfile(props) {
-  const { getPlayerByName, getUserStats, getDates, updateLastVisited } = props;
-  let params = useParams();
-  useEffect(() => {
-    getPlayerByName(userName);
-    updateLastVisited(userIdd);
-  }, [params]);
-
-  useEffect(() => {
-    if (userIdd.length !== 0) {
-      getUserStats(userIdd);
-      getDates(userIdd);
-    }
-  }, [props.userStats.userSearch]);
+function UserProfile() {
+  const dispatch = useDispatch();
+  const { userSearch, searchLoading } = useSelector((state) => state.userStats);
 
   let { userName } = useParams();
-  const userIdd = props.userStats.userSearch.map(({ _id }) => _id);
+
+  useEffect(() => {
+    dispatch(getPlayerByName(userName));
+    dispatch(updateLastVisited(uId));
+  }, [userName]);
+
+  useEffect(() => {
+    if (uId.length !== 0) {
+      dispatch(getUserStats(uId));
+      dispatch(getDates(uId));
+    }
+  }, [userSearch]);
+
+  const uId = userSearch.map(({ _id }) => _id);
 
   return (
     <div>
-      {props.userStats.searchLoading ? null : userIdd.length === 0 ? (
+      {searchLoading ? null : uId.length === 0 ? (
         <Container>
           <div
             style={{
@@ -56,7 +58,7 @@ function UserProfile(props) {
                 <UserStatsChart />
               </Col>
               <Col sm={6}>
-                <UserTournamentsList pUserId={userIdd} />
+                <UserTournamentList userId={uId} />
               </Col>
             </Row>
           </Container>
@@ -66,18 +68,4 @@ function UserProfile(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    tournament: state.tournament,
-    isAuthenticated: state.auth.isAuthenticated,
-    auth: state.auth,
-    userStats: state.userStats,
-  };
-};
-
-export default connect(mapStateToProps, {
-  getUserStats,
-  getPlayerByName,
-  getDates,
-  updateLastVisited,
-})(UserProfile);
+export default UserProfile;
