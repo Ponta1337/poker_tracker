@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import "./LeaderBoardList.css";
+import NumberFormat from "react-number-format";
 
 import { ListGroup, ListGroupItem, Row, Col, Container } from "reactstrap";
 
@@ -18,7 +19,7 @@ function LeaderBoardList() {
 
   return (
     <Container style={{ padding: 0 }}>
-      <h5 className="red-header">Earnings</h5>
+      <h5 className="red-header">Earnings (SEK)</h5>
       {!loading ? (
         <ListGroup className="lg-list" variant="flush">
           {stats.map(({ _id, totalEarnings }, index) => (
@@ -34,7 +35,14 @@ function LeaderBoardList() {
                   </Link>
                 </Col>
                 <Col sm={5} style={{ textAlign: "right" }}>
-                  $ {totalEarnings}
+                  <NumberFormat
+                    //className="number-color"
+                    value={totalEarnings}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    // prefix={"SEK "}
+                    format={totalEarnings > 999 ? "# #####" : "#####"}
+                  />
                 </Col>
               </Row>
             </ListGroupItem>

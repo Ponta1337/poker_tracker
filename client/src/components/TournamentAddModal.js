@@ -8,13 +8,21 @@ import {
   Label,
   Input,
   ModalHeader,
-  Alert,
 } from "reactstrap";
 
 import { useSelector, useDispatch } from "react-redux";
 import { addTournament } from "../actions/tournamentActions";
 
-function TournamentAddModal() {
+const options = [
+  { tName: "After Work", buyin: 198 },
+  { tName: "Tvåhundringen", buyin: 220 },
+  { tName: "Skalpen", buyin: 220 },
+  { tName: "LillLördag", buyin: 440 },
+  { tName: "FredagsFighten", buyin: 660 },
+  { tName: "SöndagsSteken", buyin: 810 },
+];
+
+function TournamentAddModal({ setIsGreen }) {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -23,10 +31,20 @@ function TournamentAddModal() {
     userId: "",
     userName: "",
   });
-  const [tournamentAdded, setTournamentAdded] = useState(false);
 
   const toggle = () => {
     setModal(!modal);
+  };
+
+  const handleSelect = (e) => {
+    options.forEach((t) => {
+      if (t.tName === e.target.value) {
+        setOnChangeValues({
+          buyInCost: t.buyin,
+          name: t.tName,
+        });
+      }
+    });
   };
 
   const onChange = (e) => {
@@ -51,12 +69,7 @@ function TournamentAddModal() {
 
     dispatch(addTournament(newTournament));
 
-    setTournamentAdded(true);
-
-    setTimeout(() => {
-      setTournamentAdded(false);
-    }, 5000);
-
+    setIsGreen(true);
     toggle();
   };
 
@@ -73,36 +86,42 @@ function TournamentAddModal() {
         </Button>
       ) : null}
 
-      {tournamentAdded ? (
-        <Alert color="success">Tournament added!</Alert>
-      ) : null}
-
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Add a played tournament</ModalHeader>
         <ModalBody>
           <Form onSubmit={onSubmit}>
             <FormGroup>
               <Label for="tournament">Tournament</Label>
-              <Input
-                required="true"
-                type="text"
-                name="name"
+              <select
+                className="custom-select"
+                required={true}
+                type="select"
                 id="tournament"
-                placeholder="Add Tournament"
-                onChange={onChange}
-              />
+                onChange={(e) => handleSelect(e)}
+              >
+                <option value="" disabled selected hidden>
+                  Tournament name
+                </option>
+
+                {options.map(({ tName }, index) => (
+                  <option key={index}>{tName}</option>
+                ))}
+              </select>
+
               <Label for="buyInCost">Buyin</Label>
               <Input
-                required="true"
+                required={true}
                 type="number"
                 name="buyInCost"
                 id="tournament"
                 placeholder="Tournament cost"
-                onChange={onChange}
+                //  onChange={onChange}
+                disabled
+                value={onChangeValues.buyInCost}
               />
               <Label for="placement">Placement</Label>
               <Input
-                required="true"
+                required={true}
                 type="number"
                 name="placement"
                 id="tournament"
@@ -111,7 +130,7 @@ function TournamentAddModal() {
               />
               <Label for="cashedFor">Cashed</Label>
               <Input
-                required="true"
+                required={true}
                 type="number"
                 name="cashedFor"
                 id="tournament"

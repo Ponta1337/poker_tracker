@@ -44,9 +44,9 @@ function PublicTournamentHistory() {
                   >
                     {userName}
                   </Link>
-                  - <small>{moment(date).fromNow()}</small>
+                  {" - "} <small>{moment(date).fromNow()}</small>
                 </div>
-                {` Won $${cashedFor} for ${ordinal(
+                {` Won ${cashedFor} kr for ${ordinal(
                   placement
                 )} place in ${name} on ${dateFormat(date, "yyyy/m/d")}`}
               </ListGroupItem>

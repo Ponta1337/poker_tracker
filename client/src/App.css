@@ -39,3 +39,7 @@ body {
   margin-bottom: 0;
   padding: 3px;
 }
+
+.number-color {
+  color: rgba(149, 31, 36, 1);
+}

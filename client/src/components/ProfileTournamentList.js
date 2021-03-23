@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import dateFormat from "dateformat";
 import { Container, Col, Table, Row, Spinner } from "reactstrap";
 import { loadingSpinner } from "./LoadingSpinner";
@@ -15,6 +15,7 @@ function ProfileTournamentList() {
   );
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const [isGreen, setIsGreen] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -22,9 +23,22 @@ function ProfileTournamentList() {
     }
   }, []);
 
+  if (isGreen) {
+    setTimeout(() => {
+      setIsGreen(false);
+    }, 4000);
+    console.log("greeeen");
+  }
   const renderTournament = (tournament, index) => {
     return (
-      <tr className="tournament-row" key={index}>
+      <tr
+        className={
+          isGreen && index === 0
+            ? "tournament-success tournament-row"
+            : "tournament-row"
+        }
+        key={index}
+      >
         <td>{tournament.name}</td>
         <td>{tournament.buyInCost}</td>
         <td>{tournament.cashedFor}</td>
@@ -58,7 +72,9 @@ function ProfileTournamentList() {
                     <th></th>
                   </tr>
                 </thead>
-                <tbody>{tournaments.map(renderTournament)}</tbody>
+                <tbody className="table-body">
+                  {tournaments.map(renderTournament)}
+                </tbody>
               </Table>
             ) : null}
           </Col>
@@ -66,7 +82,7 @@ function ProfileTournamentList() {
       ) : (
         loadingSpinner
       )}
-      <TournamentAddModal />
+      <TournamentAddModal setIsGreen={() => setIsGreen(true)} />
     </Container>
   );
 }

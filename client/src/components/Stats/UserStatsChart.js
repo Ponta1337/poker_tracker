@@ -33,7 +33,7 @@ function UserStatsChart() {
       labels: numArr,
       datasets: [
         {
-          label: "Profit History $",
+          label: "Profit History SEK",
           fill: false,
           lineTension: 0.3,
           data: cashesArr,

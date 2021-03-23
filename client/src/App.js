@@ -28,7 +28,7 @@ const App = () => {
       <Router>
         <div className="App">
           <AppNavBar />
-          <LoginSuccessAlert />
+          {/* <LoginSuccessAlert /> */}
           <div className="app-container">
             <Switch>
               <Route path="/" exact component={Home} />

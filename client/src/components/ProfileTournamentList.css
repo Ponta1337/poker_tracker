@@ -1,3 +1,9 @@
 .tournament-row {
-  transition: ease-in 1s;
+  transition: ease-in 0.5s;
+  /* transition: ease-in-out 0.5s; */
+}
+
+.tournament-success {
+  /* //color: green; */
+  background: #02ff3d;
 }

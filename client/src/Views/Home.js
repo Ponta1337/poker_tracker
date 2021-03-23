@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "reactstrap";
 import PublicTournamentHistory from "../components/PublicTournamentHistory";
 
-const Home = () => {
+function Home() {
   return (
     <Container
       style={{
@@ -23,6 +23,6 @@ const Home = () => {
       </Row>
     </Container>
   );
-};
+}
 
 export default Home;

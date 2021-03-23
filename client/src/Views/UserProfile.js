@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import UserStats from "../components/Stats/UserStats";
 import { useParams } from "react-router-dom";
-
 import { Container, Row, Col } from "reactstrap";
 import {
   getUserStats,
@@ -25,14 +24,14 @@ function UserProfile() {
   useEffect(() => {
     dispatch(getPlayerByName(userName));
     dispatch(updateLastVisited(uId));
-  }, [userName]);
+  }, [userName, dispatch]);
 
   useEffect(() => {
     if (uId.length !== 0) {
       dispatch(getUserStats(uId));
       dispatch(getDates(uId));
     }
-  }, [userSearch]);
+  }, [userSearch, dispatch]);
 
   const uId = userSearch.map(({ _id }) => _id);
 
