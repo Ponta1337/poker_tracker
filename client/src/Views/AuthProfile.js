@@ -17,7 +17,9 @@ function AuthProfile() {
   const { tournaments, tournamentsByUserIdisLoaded, loading } = useSelector(
     (state) => state.tournament
   );
+
   const [isAuth, setIsAuth] = useState(false);
+  const [showNoAuth, setShowNoAuth] = useState(false);
   const { userName } = useParams();
 
   useEffect(() => {
@@ -25,8 +27,9 @@ function AuthProfile() {
       dispatch(getUserStats(user._id));
       dispatch(getDates(user._id));
       setIsAuth(true);
+      setShowNoAuth(true);
     }
-  }, [isAuthenticated, tournaments]);
+  }, [isAuthenticated, tournaments, userName, dispatch]);
 
   return (
     <div>
@@ -37,28 +40,31 @@ function AuthProfile() {
           ) : (
             <div>
               <UserBanner />
-              <Container>
-                <Row>
-                  {tournaments.length === 0 ? (
-                    <h3>Add your first tournmanet!</h3>
-                  ) : (
+              {tournaments.length === 0 ? (
+                <div className="new-user-container">
+                  <h3>Add your first tournament!</h3>
+                  <ProfileTournamentList />
+                </div>
+              ) : (
+                <Container>
+                  <Row>
                     <Col sm={5}>
                       <UserStats />
                       <UserStatsChart />
                     </Col>
-                  )}
 
-                  <Col sm={7}>
-                    <ProfileTournamentList />
-                  </Col>
-                </Row>
-              </Container>
+                    <Col sm={7}>
+                      <ProfileTournamentList />
+                    </Col>
+                  </Row>
+                </Container>
+              )}
             </div>
           )}
         </div>
-      ) : (
-        <div>401 Unautharized</div>
-      )}
+      ) : !isAuth && showNoAuth ? (
+        <div className="unautharized-container">401 Unautharized</div>
+      ) : null}
     </div>
   );
 }

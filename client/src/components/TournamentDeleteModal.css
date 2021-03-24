@@ -1,0 +1,10 @@
+.deleted {
+  transition: ease-in 1s;
+  opacity: 0.3;
+  /* background: red; */
+}
+
+.fas,
+.fa-trash-alt {
+  pointer-events: none;
+}

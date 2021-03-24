@@ -27,10 +27,7 @@ function TournamentAddModal({ setIsGreen }) {
   const dispatch = useDispatch();
 
   const [modal, setModal] = useState(false);
-  const [onChangeValues, setOnChangeValues] = useState({
-    userId: "",
-    userName: "",
-  });
+  const [onChangeValues, setOnChangeValues] = useState({});
 
   const toggle = () => {
     setModal(!modal);
@@ -40,11 +37,13 @@ function TournamentAddModal({ setIsGreen }) {
     options.forEach((t) => {
       if (t.tName === e.target.value) {
         setOnChangeValues({
+          ...onChangeValues,
           buyInCost: t.buyin,
           name: t.tName,
         });
       }
     });
+    console.log(onChangeValues);
   };
 
   const onChange = (e) => {
@@ -54,6 +53,7 @@ function TournamentAddModal({ setIsGreen }) {
       userId: user._id,
       userName: user.name,
     });
+    console.log(onChangeValues);
   };
 
   const onSubmit = (e) => {
@@ -66,10 +66,13 @@ function TournamentAddModal({ setIsGreen }) {
       cashedFor: onChangeValues.cashedFor,
       buyInCost: onChangeValues.buyInCost,
     };
-
+    console.log(onChangeValues);
+    console.log(newTournament);
     dispatch(addTournament(newTournament));
 
     setIsGreen(true);
+
+    setOnChangeValues({});
     toggle();
   };
 
@@ -82,7 +85,7 @@ function TournamentAddModal({ setIsGreen }) {
           onClick={toggle}
           block
         >
-          Add Tournament
+          Add Played Tournament
         </Button>
       ) : null}
 

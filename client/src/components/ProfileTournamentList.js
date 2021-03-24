@@ -27,7 +27,6 @@ function ProfileTournamentList() {
     setTimeout(() => {
       setIsGreen(false);
     }, 4000);
-    console.log("greeeen");
   }
   const renderTournament = (tournament, index) => {
     return (
@@ -56,7 +55,9 @@ function ProfileTournamentList() {
 
   return (
     <Container className="mt-4 mt-md-0" style={{ padding: 0 }}>
-      <h5 className="red-header">Recent Tournaments</h5>
+      {tournaments.length !== 0 ? (
+        <h5 className="red-header">Recent Tournaments</h5>
+      ) : null}
       {!loading ? (
         <Row>
           <Col>
@@ -82,6 +83,7 @@ function ProfileTournamentList() {
       ) : (
         loadingSpinner
       )}
+
       <TournamentAddModal setIsGreen={() => setIsGreen(true)} />
     </Container>
   );

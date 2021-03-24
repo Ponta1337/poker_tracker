@@ -2,23 +2,33 @@ import React, { Fragment, useState } from "react";
 import { Button, Modal, ModalBody, ModalHeader } from "reactstrap";
 import { useDispatch } from "react-redux";
 import { deleteTournament } from "../actions/tournamentActions";
+import "./TournamentDeleteModal.css";
 
 function TournamentDeleteModal({ tournamentToDeleteId }) {
   const dispatch = useDispatch();
+  const [targetTr, setTargetTr] = useState("");
 
   const [modal, setModal] = useState(false);
   const [tournamentId, setTournamentId] = useState(null);
 
   const onDeleteClick = () => {
+    targetTr.className = "tournament-row deleted";
     setTimeout(() => {
       dispatch(deleteTournament(tournamentId));
-    }, 1000);
+      targetTr.className = "tournament-row";
+    }, 2000);
 
     toggle();
   };
 
-  const onClickSetIdAndToggle = () => {
+  const onClickSetIdAndToggle = (e) => {
     setTournamentId(tournamentToDeleteId);
+    setTargetTr(e.target.parentElement.parentElement);
+    // deleteTarget.className = "tournament-row deleted";
+    // console.log(e.target);
+    //target.classList.add("mystyle");
+    //console.log(target);
+    // console.log(e.target.parentElement);
     toggle();
   };
 
@@ -32,7 +42,7 @@ function TournamentDeleteModal({ tournamentToDeleteId }) {
         className="remove-btn"
         color="danger"
         size="sm"
-        onClick={onClickSetIdAndToggle}
+        onClick={(e) => onClickSetIdAndToggle(e)}
       >
         <i className="fas fa-trash-alt"></i>
       </Button>
