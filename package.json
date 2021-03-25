@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Poker tracker built with MERN stack and redux",
   "main": "server.js",
-  "repository": "github:Ponta1337/poker_tracker",
   "scripts": {
     "client-install": "npm install --prefix client",
     "start": "node server.js",

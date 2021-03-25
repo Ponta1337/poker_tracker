@@ -9,11 +9,8 @@ const Tournament = require("../../models/Tournament");
 //@desc  Get all tournaments
 //@access Public
 
-// { cashedFor: { $gt: 0 } },
 router.get("/", (req, res) => {
   Tournament.find()
-    .limit(50)
-    // .limit(8 * req.params.pageNumber)
     .sort({ date: -1 })
     .then((tournaments) => res.json(tournaments));
 });

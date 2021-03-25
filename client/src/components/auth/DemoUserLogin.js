@@ -65,7 +65,7 @@ class DemoUserLogin extends Component {
       <div>
         <div>
           <NavLink onClick={this.toggle} href="#">
-            Login as guest
+            Guest
           </NavLink>
 
           <Modal isOpen={this.state.modal} toggle={this.toggle}>
